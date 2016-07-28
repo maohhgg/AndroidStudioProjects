@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +21,9 @@ import java.util.Calendar;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private MyDatabaseHelper sql;
     private RecyclerView recyclerView;
+    private Spinner s;
+    private int check;
+    private Integer[] spinnerArray;
     private SQLiteDatabase DB;
     private RecycleAdapter recycleAdapter;
 
@@ -40,9 +47,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recycleAdapter.setCursor(cursor);
         recyclerView.setAdapter(recycleAdapter);
 
+        spinnerArray = new Integer[recycleAdapter.getItemCount()];
+        for (int i = 0;i < recycleAdapter.getItemCount();i++){
+            spinnerArray[i] = i+1;
+        }
+        s = (Spinner) findViewById(R.id.Spinner);
+        s.setAdapter(new ArrayAdapter<Integer>(this,android.R.layout.simple_list_item_1,spinnerArray));
+
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("MainActivity","当前选择的是: " + spinnerArray[i]);
+                check = spinnerArray[i];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         findViewById(R.id.logout).setOnClickListener(this);
-
         findViewById(R.id.insert_SQL).setOnClickListener(this);
 
     }

@@ -54,7 +54,6 @@ class RecycleAdapter extends RecyclerView.Adapter{
         Vholder.getName().setText(cursor.getString(cursor.getColumnIndex("name")));
         Vholder.getTime().setText(cursor.getString(cursor.getColumnIndex("time")));
         Vholder.getPasswd().setText(cursor.getString(cursor.getColumnIndex("password")));
-
     }
 
     @Override

@@ -8,46 +8,36 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.mao.onlineoroffline.MainActivity">
+    tools:context="com.example.mao.fileds.MainActivity">
 
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="下线广播"
-        android:id="@+id/logout"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_user_name"
-        android:hint="输入用户名"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_user_passwd"
-        android:hint="输入密码"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="插入数据"
-        android:id="@+id/insert_SQL"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:id="@+id/Spinner">
+
     </Spinner>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="删除数据"
-        android:id="@+id/delete_SQL"/>
-
-    <android.support.v7.widget.RecyclerView
+        android:text="2016/7/21"
+        android:id="@+id/btnDate"/>
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/recyclerView">
-    </android.support.v7.widget.RecyclerView>
-
+        android:layout_height="wrap_content"
+        android:text="21:17"
+        android:id="@+id/btnTime"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="上面下拉框选择的是"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup">
+    </RadioGroup>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBtn"
+        android:text="选择"/>
 </LinearLayout>
