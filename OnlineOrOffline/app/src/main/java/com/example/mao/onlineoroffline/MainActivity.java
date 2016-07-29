@@ -85,7 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             spinnerArray[i] = i+1;
         }
         s = (Spinner) findViewById(R.id.Spinner);
-//        s.setAdapter(new ArrayAdapter<Integer>(this,android.R.layout.simple_list_item_1,spinnerArray));
         s.setAdapter(new SimpleCursorAdapter(this,android.R.layout.simple_list_item_1,cursor,new String[]{"name"},new int[] { android.R.id.text1 }));
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
