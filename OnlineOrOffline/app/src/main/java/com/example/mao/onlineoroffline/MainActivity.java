@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,22 +55,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 sendBroadcast(new Intent("com.example.mao.onlineoroffline.FORCE_OFFLINE"));
                 break;
             case R.id.insert_SQL:
-                ContentValues values = new ContentValues();
-                EditText inputUserName = (EditText) findViewById(R.id.input_user_name);
-                EditText inputUserPasswd = (EditText) findViewById(R.id.input_user_passwd);
-                values.put("name",inputUserName.getText().toString());
-                values.put("password",inputUserPasswd.getText().toString());
-                Calendar calendar = Calendar.getInstance();
-                values.put("time",new SimpleDateFormat("yyyy-MM-dd H:m:s").format(calendar.getTime()));
-                DB.insert("users",null,values);
-                updata();
-                break;
+//                ContentValues values = new ContentValues();
+//                EditText inputUserName = (EditText) findViewById(R.id.input_user_name);
+//                EditText inputUserPasswd = (EditText) findViewById(R.id.input_user_passwd);
+//                values.put("name",inputUserName.getText().toString());
+//                values.put("password",inputUserPasswd.getText().toString());
+//                Calendar calendar = Calendar.getInstance();
+//                values.put("time",new SimpleDateFormat("yyyy-MM-dd H:m:s").format(calendar.getTime()));
+//                DB.insert("users",null,values);
+//                updata();
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                adb.setTitle("建立一个用户");
+                EditText name = new EditText(this);
+                name.setHint("输入用户名");
+                int nameId = View.generateViewId();
+                name.setId(nameId);
+
+                EditText passwd = new EditText(this);
+                passwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                passwd.setHint("输入密码");
+                int passwdId = View.generateViewId();
+                passwd.setId(passwdId);
+                adb.setView(passwdId);
+                adb.show();
             case R.id.delete_SQL:
                 DB.delete("users","id = ?",new String[]{check+""});
                 updata();
                 break;
         }
     }
+
+
     public void updata(){
         cursor = DB.query("users",new String[]{"id as _id", "name","password","time"},null,null,null,null,null,null);
 

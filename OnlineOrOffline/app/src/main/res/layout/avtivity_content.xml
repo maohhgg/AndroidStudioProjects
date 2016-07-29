@@ -10,16 +10,6 @@
         android:layout_height="wrap_content"
         android:text="下线广播"
         android:id="@+id/logout"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_user_name"
-        android:hint="输入用户名"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_user_passwd"
-        android:hint="输入密码"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
