@@ -40,17 +40,15 @@ class RecycleAdapter extends RecyclerView.Adapter{
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell,null));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell,parent,false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder Vholder = (ViewHolder) holder;
-        Log.i("MainActivity"," position 数据么？  " + position);
 
         cursor.moveToPosition(position);
-        Vholder.getId().setText(cursor.getInt(cursor.getColumnIndex("id")) + "");
-        Log.i("MainActivity"," cursor 数据么？  " + cursor.getString(cursor.getColumnIndex("name")));
+        Vholder.getId().setText(cursor.getInt(cursor.getColumnIndex("_id")) + "");
         Vholder.getName().setText(cursor.getString(cursor.getColumnIndex("name")));
         Vholder.getTime().setText(cursor.getString(cursor.getColumnIndex("time")));
         Vholder.getPasswd().setText(cursor.getString(cursor.getColumnIndex("password")));
