@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.logout).setOnClickListener(this);
         findViewById(R.id.insert_SQL).setOnClickListener(this);
         findViewById(R.id.delete_SQL).setOnClickListener(this);
+        recyclerView.setOnClickListener(this);
     }
 
     @Override
@@ -96,6 +97,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 updata();
                 break;
             case R.id.recyclerView:
+                Log.i("MainActivity",this.toString()+"");
 //                AlertDialog.Builder adb = bindData(,null,null);
                 break;
         }

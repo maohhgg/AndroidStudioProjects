@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by MAO on 2016/7/27.
  */
-class RecycleAdapter extends RecyclerView.Adapter{
+class RecycleAdapter extends RecyclerView.Adapter implements View.OnClickListener,View.OnLongClickListener {
     private Cursor cursor;
 
     public void setCursor(Cursor cursor) {
@@ -47,6 +47,16 @@ class RecycleAdapter extends RecyclerView.Adapter{
     public void removeData(Cursor cursor,int position) {
         this.cursor = cursor;
         notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        return false;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
