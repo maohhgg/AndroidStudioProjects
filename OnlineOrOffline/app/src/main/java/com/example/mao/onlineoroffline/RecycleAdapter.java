@@ -12,6 +12,43 @@ import android.widget.TextView;
  * Created by MAO on 2016/7/27.
  */
 class RecycleAdapter extends RecyclerView.Adapter{
+    private Cursor cursor;
+
+    public void setCursor(Cursor cursor) {
+        this.cursor = cursor;
+    }
+
+    @Override
+    public int getItemCount() {
+        return cursor.getCount();
+    }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell,parent,false));
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ViewHolder Vholder = (ViewHolder) holder;
+
+        cursor.moveToPosition(position);
+        Vholder.getId().setText(cursor.getInt(cursor.getColumnIndex("_id")) + "");
+        Vholder.getName().setText(cursor.getString(cursor.getColumnIndex("name")));
+        Vholder.getTime().setText(cursor.getString(cursor.getColumnIndex("time")));
+        Vholder.getPasswd().setText(cursor.getString(cursor.getColumnIndex("password")));
+    }
+
+
+    public void addData(Cursor cursor,int position) {
+        this.cursor = cursor;
+        notifyItemInserted(position);
+    }
+
+    public void removeData(Cursor cursor,int position) {
+        this.cursor = cursor;
+        notifyItemRemoved(position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView id,name,passwd,time;
         public ViewHolder(View itemView) {
@@ -37,39 +74,5 @@ class RecycleAdapter extends RecyclerView.Adapter{
         public TextView getTime() {
             return time;
         }
-    }
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_cell,parent,false));
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder Vholder = (ViewHolder) holder;
-
-        cursor.moveToPosition(position);
-        Vholder.getId().setText(cursor.getInt(cursor.getColumnIndex("_id")) + "");
-        Vholder.getName().setText(cursor.getString(cursor.getColumnIndex("name")));
-        Vholder.getTime().setText(cursor.getString(cursor.getColumnIndex("time")));
-        Vholder.getPasswd().setText(cursor.getString(cursor.getColumnIndex("password")));
-    }
-
-    @Override
-    public int getItemCount() {
-        return cursor.getCount();
-    }
-
-    private Cursor cursor;
-
-    public void setCursor(Cursor cursor) {
-        this.cursor = cursor;
-    }
-    public void addData(Cursor cursor,int position) {
-        this.cursor = cursor;
-        notifyItemInserted(position);
-    }
-
-    public void removeData(int position) {
-        notifyItemRemoved(position);
     }
 }
