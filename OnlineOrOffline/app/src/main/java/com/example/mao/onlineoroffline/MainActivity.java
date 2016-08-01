@@ -10,8 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -39,6 +42,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         sql = new MyDatabaseHelper(this,"users.db",null,3);
         DB = sql.getWritableDatabase();
 
@@ -51,13 +57,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         recycleAdapter.setCursor(cursor);
         recyclerView.setAdapter(recycleAdapter);
-        recyclerView.setOnClickListener(this);
         updata();
 
         findViewById(R.id.logout).setOnClickListener(this);
         findViewById(R.id.insert_SQL).setOnClickListener(this);
         findViewById(R.id.delete_SQL).setOnClickListener(this);
         recyclerView.setOnClickListener(this);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this,ContactsActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -95,10 +121,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 cursor = DB.query("users",new String[]{"id as _id", "name","password","time"},null,null,null,null,null,null);
                 recycleAdapter.removeData(cursor,check);
                 updata();
-                break;
-            case R.id.recyclerView:
-                Log.i("MainActivity",this.toString()+"");
-//                AlertDialog.Builder adb = bindData(,null,null);
                 break;
         }
     }
