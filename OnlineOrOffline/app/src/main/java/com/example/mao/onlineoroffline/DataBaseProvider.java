@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-/**
- * Created by MAO on 2016/8/1.
- */
+
 public class DataBaseProvider extends ContentProvider {
     private static final int USER_DIR = 0;
     private static final int USER_ITEM = 1;
@@ -89,12 +87,17 @@ public class DataBaseProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        int updateRow = 0;
-        switch (uriMatcher.match(uri)){
+        int updataRow = 0;
+        switch (uriMatcher.match(uri)) {
             case USER_DIR:
+                updataRow = db.update("users", contentValues, s, strings);
                 break;
             case USER_ITEM:
+                String userId = uri.getPathSegments().get(1);
+                updataRow = db.update("users", contentValues, "id = ?", new String[]{userId});
                 break;
-        return 0;
+
+        }
+        return updataRow;
     }
 }
