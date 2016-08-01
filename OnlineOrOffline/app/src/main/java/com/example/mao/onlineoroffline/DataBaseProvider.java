@@ -50,6 +50,12 @@ public class DataBaseProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(Uri uri) {
+        switch (uriMatcher.match(uri)){
+            case USER_DIR:
+                return "vnd.android.cursor.dir/vnd.com.example.mao.onlineoroffline.provider.users";
+            case USER_ITEM:
+                return "vnd.android.cursor.item/vnd.com.example.mao.onlineoroffline.provider.users";
+        }
         return null;
     }
 
