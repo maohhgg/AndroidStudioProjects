@@ -2,6 +2,8 @@ package com.example.mao.onlineoroffline;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by MAO on 2016/7/24.
@@ -48,8 +51,19 @@ public class LoginActivity extends BaseActivity {
                     editor.clear();
                 }
                 Log.i("MainActivity","username is " + un + " Password is " + pw);
-                if(un.equals("admin")  && pw.equals("mao555")){
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                MyDatabaseHelper sql = new MyDatabaseHelper(LoginActivity.this,"users.db",null,3);
+                SQLiteDatabase DB = sql.getReadableDatabase();
+                Cursor user = DB.query("users", new String[]{"id", "name", "password"}, "name=?", new String[]{un}, null, null, null, null);
+                Log.i("MainActivity", String.valueOf(user.getCount()));
+                if(user.getCount() == 0){
+                    Toast.makeText(LoginActivity.this,"用户名不存在！",Toast.LENGTH_LONG).show();
+                } else {
+                    user.moveToFirst();
+                    if(pw.equals(user.getString(user.getColumnIndex("password")))){
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    } else {
+                        Toast.makeText(LoginActivity.this,"密码错误！",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
