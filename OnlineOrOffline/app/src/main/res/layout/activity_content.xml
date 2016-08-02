@@ -3,29 +3,45 @@
     android:id="@+id/activity_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:showIn="@layout/activity_main">
-    <Button
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="下线广播"
-        android:id="@+id/logout"/>
-    <Button
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下线广播"
+            android:id="@+id/logout"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="插入数据"
+            android:id="@+id/insert_SQL"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/Spinner">
+        </Spinner>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除数据"
+            android:id="@+id/delete_SQL"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="插入数据"
-        android:id="@+id/insert_SQL"/>
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/Spinner">
-    </Spinner>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="删除数据"
-        android:id="@+id/delete_SQL"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:id="@+id/recyclerView">
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
