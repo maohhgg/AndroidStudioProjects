@@ -68,7 +68,7 @@ public class DataBaseProvider extends ContentProvider {
             case USER_DIR:
             case USER_ITEM:
                 long newId = db.insert("users",null,contentValues);
-                uriReturn = Uri.parse("content://" + AUTHORITY + "/book/" + newId);
+                uriReturn = Uri.parse("content://" + AUTHORITY + "/user/" + newId);
                 break;
         }
         return uriReturn;

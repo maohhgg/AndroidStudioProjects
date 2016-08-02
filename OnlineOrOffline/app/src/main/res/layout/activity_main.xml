@@ -22,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/avtivity_content" />
+    <include layout="@layout/activity_content" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

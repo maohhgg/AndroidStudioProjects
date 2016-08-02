@@ -13,11 +13,13 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +33,12 @@
         <activity
             android:name=".ContactsActivity"
             android:label="@string/title_activity_contacts"/>
+
+        <provider
+            android:exported = "true"
+            android:authorities="com.example.mao.onlineoroffline.provider"
+            android:name="com.example.mao.onlineoroffline.DataBaseProvider">
+        </provider>
     </application>
 
 </manifest>
