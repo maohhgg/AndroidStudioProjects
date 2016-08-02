@@ -36,7 +36,7 @@
         <provider
             android:name=".DataBaseProvider"
             android:authorities="com.example.mao.onlineoroffline.provider"
-            android:exported="true"></provider>
+            android:exported="true" />
 
     </application>
 
