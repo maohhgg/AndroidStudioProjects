@@ -122,16 +122,19 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent("android.intent.action.GET_CONTENT");
-            intent.setType("image/*");
-            intent.putExtra("crop",true);
-            intent.putExtra("scale",true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,imagesUri);
-            startActivityForResult(intent,CROP_SCALE_PHOTO);
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                intent.setType("image/*");
+                intent.putExtra("crop",true);
+                intent.putExtra("scale",true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,imagesUri);
+                startActivityForResult(intent,CROP_SCALE_PHOTO);
+                break;
+            case R.id.action_music:
+                startActivity(new Intent(MainActivity.this,MusicActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
