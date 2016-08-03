@@ -25,6 +25,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private static final int TAKE_PHOTO = 0;
     private static final int CROP_PHOTO = 1;
+    private static final int CROP_SCALE_PHOTO = 2;
     private MessageReceiver messageReceiver;
     private Uri imagesUri;
     private File outputImage;
@@ -62,12 +63,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                intent.setType("image/*");
-                intent.putExtra("crop",true);
-                intent.putExtra("scale",true);
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imagesUri);
-                startActivityForResult(intent,CROP_PHOTO);
+                startActivityForResult(intent,TAKE_PHOTO);
             }
         });
     }
@@ -95,12 +93,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("MainActivity","anyway i am start!");
                 if (resultCode == RESULT_OK) {
                     try {
+                        /**
+                         *  decodeStream 异常 SkImageDecoder::Factory returned null
+                         *   1. InputStream reset  X
+                         *   2. 使用HttpURLConnection  (获取File对象)
+                         */
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagesUri));
                         iv.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
+                break;
+            case CROP_SCALE_PHOTO:
+                iv.setImageURI(imagesUri);
                 break;
         }
     }
@@ -120,9 +126,12 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            Intent intent = new Intent("android.intent.action.GET_CONTENT");
+            intent.setType("image/*");
+            intent.putExtra("crop",true);
+            intent.putExtra("scale",true);
             intent.putExtra(MediaStore.EXTRA_OUTPUT,imagesUri);
-            startActivityForResult(intent,TAKE_PHOTO);
+            startActivityForResult(intent,CROP_SCALE_PHOTO);
         }
 
         return super.onOptionsItemSelected(item);
