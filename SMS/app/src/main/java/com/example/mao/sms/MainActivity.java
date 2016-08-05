@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_music:
                 startActivity(new Intent(MainActivity.this,MusicActivity.class));
                 break;
+            case R.id.action_video:
+                startActivity(new Intent(MainActivity.this,VideoActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);

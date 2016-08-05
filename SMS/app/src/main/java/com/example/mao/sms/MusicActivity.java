@@ -24,6 +24,15 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+    }
+
     public void initMediaPlay(){
         File file = new File(Environment.getExternalStorageDirectory(),"music.mp3");
         try {
