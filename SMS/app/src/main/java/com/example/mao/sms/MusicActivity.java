@@ -20,6 +20,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.start).setOnClickListener(this);
         findViewById(R.id.stop).setOnClickListener(this);
         findViewById(R.id.pause).setOnClickListener(this);
+        initMediaPlay();
 
     }
 
@@ -32,11 +33,26 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.start:
-
+                if (!mediaPlayer.isPlaying()){
+                    mediaPlayer.start();
+                }
+                break;
+            case R.id.stop:
+                if (mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
+                break;
+            case R.id.pause:
+                if (mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                }
+                break;
+            default:
                 break;
         }
     }
