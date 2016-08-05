@@ -38,9 +38,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.start:
-                if (!mediaPlayer.isPlaying()){
-                    mediaPlayer.start();
-                }
+                if (!mediaPlayer.isPlaying()){ mediaPlayer.start(); }
                 break;
             case R.id.stop:
                 if (mediaPlayer.isPlaying()){
