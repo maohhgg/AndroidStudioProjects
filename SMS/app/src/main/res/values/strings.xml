@@ -7,4 +7,9 @@
     <string name="pause">暂停</string>
     <string name="start">播放</string>
     <string name="stop">停止</string>
+    <string name="title_activity_thread_ui">ThreadUIActivity</string>
+    <string name="action_start_server">启动</string>
+    <string name="action_stop_server">停止</string>
+    <string name="action_bind_server">绑定</string>
+    <string name="action_unbind_server">解绑</string>
 </resources>

@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.mao.sms.MainActivity">
+    <item
+        android:id="@+id/action_start_server"
+        android:orderInCategory="100"
+        android:title="@string/action_start_server"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_stop_server"
+        android:orderInCategory="100"
+        android:title="@string/action_stop_server"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bind_server"
+        android:orderInCategory="100"
+        android:title="@string/action_bind_server"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_unbind_server"
+        android:orderInCategory="100"
+        android:title="@string/action_unbind_server"
+        app:showAsAction="never" />
+</menu>
