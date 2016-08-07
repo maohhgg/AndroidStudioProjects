@@ -138,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_video:
                 startActivity(new Intent(MainActivity.this,VideoActivity.class));
                 break;
+            case R.id.action_thread:
+                startActivity(new Intent(MainActivity.this,ThreadActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);

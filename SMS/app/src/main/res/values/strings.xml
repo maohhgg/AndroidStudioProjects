@@ -3,6 +3,7 @@
     <string name="action_settings">选取照片</string>
     <string name="action_music">播放音乐</string>
     <string name="action_video">播放视频</string>
+    <string name="action_thread">多线程案例</string>
     <string name="pause">暂停</string>
     <string name="start">播放</string>
     <string name="stop">停止</string>

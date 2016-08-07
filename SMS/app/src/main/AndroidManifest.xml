@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MusicActivity" />
-        <activity android:name=".VideoActivity"></activity>
+        <activity android:name=".VideoActivity" />
+        <activity android:name=".ThreadActivity"></activity>
     </application>
 
 </manifest>
