@@ -14,7 +14,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.open_url:
-                sendRequestWhitHttpURLConnection();
+//                sendRequestWhitHttpURLConnection();
+                sendRequestWhitHttpClient();
                 break;
         }
     }
@@ -80,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     URL url = new URL("https://www.baidu.com");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
+//                    connection.setRequestMethod("POST");
+//                    DataOutputStream DOS = new DataOutputStream(connection.getOutputStream());
+//                    DOS.writeBytes("user=aaa&password=123123");
                     connection.setConnectTimeout(1000);
                     connection.setReadTimeout(1000);
                     InputStream in = connection.getInputStream();
@@ -104,5 +112,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }).start();
+    }
+
+
+    private void sendRequestWhitHttpClient(){
+        HttpClient httpClient = new DefaultHttpClient();
     }
 }
