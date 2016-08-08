@@ -29,13 +29,17 @@
         <activity android:name=".VideoActivity" />
         <activity
             android:name=".ThreadActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".MyService"
             android:enabled="true"
             android:exported="true" />
 
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

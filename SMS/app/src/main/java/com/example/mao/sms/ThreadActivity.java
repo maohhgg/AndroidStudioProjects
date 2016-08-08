@@ -1,9 +1,11 @@
 package com.example.mao.sms;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +16,32 @@ import android.widget.TextView;
 
 public class ThreadActivity extends AppCompatActivity {
     private TextView tv;
+    private MyService.DownloadBinder downloadBinder;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            downloadBinder = (MyService.DownloadBinder) iBinder;
+            downloadBinder.startDown();
+
+            Message msg = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("date",downloadBinder.getProgress());
+            msg.setData(bundle);
+            msg.what = 1;
+            handler.sendMessage(msg);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg){
             if(msg.what == 1){
-                tv.setText("Life Is Wonderful");
+                Bundle bundle = msg.getData();
+                tv.setText(bundle.getString("date"));
             }
         }
     };
@@ -39,6 +62,9 @@ public class ThreadActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Message msg = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("date","HA HA HA HA");
+                        msg.setData(bundle);
                         msg.what = 1;
                         handler.sendMessage(msg);
                     }
@@ -68,8 +94,10 @@ public class ThreadActivity extends AppCompatActivity {
                 stopService(new Intent(this,MyService.class));
                 break;
             case R.id.action_bind_server:
+                bindService(new Intent(this,MyService.class),connection,BIND_AUTO_CREATE);
                 break;
             case R.id.action_unbind_server:
+                unbindService(connection);
                 break;
         }
 
