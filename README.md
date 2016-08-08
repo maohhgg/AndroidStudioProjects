@@ -38,5 +38,5 @@
 
 #### [NetWork](https://github.com/maohhgg/AndroidStudioProjects/tree/master/NetWork)
 * 使用 `HttpURLConnection` 发送请求和接受内容
-* <del>使用 `HttpClient` 发送请求和接受内容，Android SDK 5.1开始不建议使用 `HttpURLConnection` 来代替 `HttpClient`  </del>
+* <del>使用 `HttpClient` 发送请求和接受内容，Android SDK 5.1开始不建议使用 `HttpClient`</del> 建议使用`HttpURLConnection`
 * 解析 `XML` `Json` 格式文件。
