@@ -22,13 +22,13 @@ import java.net.URL;
  * Created by maohh on 2016/8/9.
  */
 public class HttpRequset {
-    public static void sendRequestWhitHttpURLConnection(final Handler handler) {
+    public static void sendRequestWhitHttpURLConnection(final String URLstr, final Handler handler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 try {
-                    URL url = new URL("http://222.222.222.200");
+                    URL url = new URL(URLstr);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
 //                    connection.setRequestMethod("POST");
@@ -60,7 +60,7 @@ public class HttpRequset {
     }
 
 
-    public static void sendRequestWhitHttpClient(final Handler handler) {
+    public static void sendRequestWhitHttpClient(final String URLstr, final Handler handler) {
 
         new Thread(new Runnable() {
             @Override
@@ -77,7 +77,7 @@ public class HttpRequset {
 //                httpPost.setEntity(entity);
 //                HttpResponse httpResponse =  httpClient.execute(httpPost);
 
-                    HttpGet httpGet = new HttpGet("http://222.222.222.200");
+                    HttpGet httpGet = new HttpGet(URLstr);
                     HttpResponse httpResponse  = httpClient.execute(httpGet);
                     if(httpResponse.getStatusLine().getStatusCode() == 200){
                         HttpEntity httpEntity = httpResponse.getEntity();

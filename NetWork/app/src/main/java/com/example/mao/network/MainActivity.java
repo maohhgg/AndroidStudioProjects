@@ -83,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.open_url:
-               HttpRequset.sendRequestWhitHttpURLConnection(handler);  // HttpURLConnection
+               HttpRequset.sendRequestWhitHttpURLConnection("http://222.222.222.200",handler);  // HttpURLConnection
 
                 /**
                  * Android 5.1起不建议使用 sdk中已移除了
                  * 使用需要在 build.gradle中的android项引用 useLibrary 'org.apache.http.legacy'
                  */
-                // HttpRequset.sendRequestWhitHttpClient(handler);
+                // HttpRequset.sendRequestWhitHttpClient("http://222.222.222.200",handler);
                 break;
         }
     }
