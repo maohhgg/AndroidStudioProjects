@@ -39,4 +39,9 @@
 #### [NetWork](https://github.com/maohhgg/AndroidStudioProjects/tree/master/NetWork)
 * 使用 `HttpURLConnection` 发送请求和接受内容
 * <del>使用 `HttpClient` 发送请求和接受内容，Android SDK 5.1开始不建议使用 `HttpClient`</del> 建议使用`HttpURLConnection`
-* 解析 `XML` `Json` 格式文件。
+* 解析 `XML` `JSON` 格式文件，
+    1. XML  Pull解析方式
+    2. XML  SAX解析方式
+    3. JSON  使用JSONObject解析
+    4. JSON  使用Google GSON解析 （特定的数据格式）
+* app/java/com.example.network/[index.php](https://github.com/maohhgg/AndroidStudioProjects/blob/master/NetWork/app/src/main/java/com/example/mao/network/index.php) 为生成 `XML` 和 `JSON` 的PHP文件，为不同的解析方式生成了不同的格式。
