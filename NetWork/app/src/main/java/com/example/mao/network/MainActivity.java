@@ -1,5 +1,6 @@
 package com.example.mao.network;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,8 +15,16 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -25,6 +34,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "MainActivity";
@@ -61,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-
+            case R.id.action_xml:
+                startActivity(new Intent(this,XMLActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -70,52 +83,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.open_url:
-//                sendRequestWhitHttpURLConnection();
-                sendRequestWhitHttpClient();
+               HttpRequset.sendRequestWhitHttpURLConnection(handler);  // HttpURLConnection
+
+                /**
+                 * Android 5.1起不建议使用 sdk中已移除了
+                 * 使用需要在 build.gradle中的android项引用 useLibrary 'org.apache.http.legacy'
+                 */
+                // HttpRequset.sendRequestWhitHttpClient(handler);
                 break;
         }
-    }
-
-    private void sendRequestWhitHttpURLConnection() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    URL url = new URL("https://www.baidu.com");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-//                    connection.setRequestMethod("POST");
-//                    DataOutputStream DOS = new DataOutputStream(connection.getOutputStream());
-//                    DOS.writeBytes("user=aaa&password=123123");
-                    connection.setConnectTimeout(1000);
-                    connection.setReadTimeout(1000);
-                    InputStream in = connection.getInputStream();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder RS = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null){
-                        RS.append(line);
-                    }
-                    Log.i(TAG,RS.toString());
-                    Message msg = new Message();
-                    msg.what = 1;
-                    msg.obj = RS.toString();
-                    handler.sendMessage(msg);
-                    connection.disconnect();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-    }
-
-
-    private void sendRequestWhitHttpClient(){
-        HttpClient httpClient = new DefaultHttpClient();
     }
 }
