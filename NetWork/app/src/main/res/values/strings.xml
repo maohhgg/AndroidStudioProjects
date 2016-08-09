@@ -4,6 +4,9 @@
     <string name="action_json">Json</string>
     <string name="xml_pull">Pull解析XML</string>
     <string name="xml_sax">SAX解析XML</string>
+    <string name="json_JSONObject">JSONObject解析Json</string>
+    <string name="json_GSON">GSON解析Json</string>
     <string name="open_url">打开链接</string>
     <string name="title_activity_xml">XMLActivity</string>
+    <string name="title_activity_json">JsonActivity</string>
 </resources>

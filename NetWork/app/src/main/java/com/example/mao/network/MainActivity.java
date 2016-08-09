@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_xml:
                 startActivity(new Intent(this,XMLActivity.class));
                 break;
+            case R.id.action_json:
+                startActivity(new Intent(this,JsonActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

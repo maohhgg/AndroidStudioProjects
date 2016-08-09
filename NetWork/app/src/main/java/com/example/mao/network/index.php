@@ -1,28 +1,51 @@
 <?php
-$array = array(
-    "id" => 0,
-    "type" => 'book',
-    "name" => "JavaScript权威指南",
-    "0" => array(
-        'title' => "JavaScript权威指南",
-        'author' => "Flanagan",
-        'translator' => "淘宝前端团队",
-        "price" => "￥100"),
-    "1" => array(
-        'title' => "JavaScript: The Definitive Guide",
-        'author' => "Flanagan",
-        "price" => "$30")
-);
-// $array = array(
-//     '0' => array(
-//         'id' => 1,
-//         'name' => "aaa",
-//         'version' => "1.0"),
-//     '1' => array(
-//         'id' => 2,
-//         'name' => "bbb",
-//         'version' => "1.1" ),
-// );
+$params = array_keys($_GET,0);
+if(isset($params[1])){
+    switch ($params[1]){
+        case 'serialize':
+            $array = array(
+                "id" => 1,
+                "name" => "电脑",
+                "children" => array(
+                    0 => array(
+                        "id" => 10,
+                        "name" => "笔记本"
+                     ),
+                    1 => array(
+                        "id" => 11,
+                        "name" => "台式机"
+                    )
+                )
+            );
+            break;
+        case 'unserialize':
+            $array = array(
+                '0' => array(
+                    'id' => 1,
+                    'name' => "aaa",
+                    'version' => "1.0"),
+                '1' => array(
+                    'id' => 2,
+                    'name' => "bbb",
+                    'version' => "1.1" ));
+            break;
+    }
+} else {
+    $array = array(
+        "id" => 0,
+        "type" => 'book',
+        "name" => "JavaScript权威指南",
+        "0" => array(
+            'title' => "JavaScript权威指南",
+            'author' => "Flanagan",
+            'translator' => "淘宝前端团队",
+            "price" => "￥100"),
+        "1" => array(
+            'title' => "JavaScript: The Definitive Guide",
+            'author' => "Flanagan",
+            "price" => "$30"));
+}
+
 switch (array_keys($_GET,0)[0]) {
     case 'json':
         JsonCreate($array);

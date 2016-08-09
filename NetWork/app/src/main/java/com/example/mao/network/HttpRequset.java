@@ -1,7 +1,10 @@
 package com.example.mao.network;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -92,5 +95,17 @@ public class HttpRequset {
             }
         }).start();
 
+    }
+    public static void AlertDialogShow(Context context,String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("XML");
+        builder.setMessage(message);
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
     }
 }

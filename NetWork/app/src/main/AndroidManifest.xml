@@ -23,6 +23,10 @@
         <activity
             android:name=".XMLActivity"
             android:label="@string/title_activity_xml"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".JsonActivity"
+            android:label="@string/title_activity_json"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

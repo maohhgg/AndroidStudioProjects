@@ -45,22 +45,21 @@ public class XMLActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.xml_pull:
                 HttpRequset.sendRequestWhitHttpURLConnection("http://222.222.222.200/data/?xml",new Handler(){
                     public void handleMessage(Message msg){
-                        if (msg.what == 1){
-                            String mes = parseXMLWithPull( (String)msg.obj);
-                            AlertDialogShow(mes);
-                        }
-                    }});
+                    if (msg.what == 1){
+                        String mes = parseXMLWithPull( (String)msg.obj);
+                        HttpRequset.AlertDialogShow(XMLActivity.this,mes);
+                    }
+                }});
                 break;
 
             case R.id.xml_sax:
                 HttpRequset.sendRequestWhitHttpURLConnection("http://222.222.222.200/data/?xml",new Handler(){
                     public void handleMessage(Message msg){
-                        if (msg.what == 1){
-
-                            String mes = parseXMLWithSAX( (String)msg.obj);
-                            AlertDialogShow(mes);
-                        }
-                    }});
+                    if (msg.what == 1){
+                        String mes = parseXMLWithSAX( (String)msg.obj);
+                        HttpRequset.AlertDialogShow(XMLActivity.this,mes);
+                    }
+                }});
                 break;
         }
     }
@@ -111,18 +110,5 @@ public class XMLActivity extends AppCompatActivity implements View.OnClickListen
             e.printStackTrace();
         }
         return "";
-    }
-
-    public void AlertDialogShow(String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("XML");
-        builder.setMessage(message);
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.show();
     }
 }
