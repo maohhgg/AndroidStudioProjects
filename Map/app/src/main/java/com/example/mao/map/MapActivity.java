@@ -2,6 +2,7 @@ package com.example.mao.map;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,12 +38,13 @@ import java.util.List;
 
 public class MapActivity extends AppCompatActivity {
 
-    private TextView postionView;
+    private TextView postionView,locPostionView;
     private LocationManager locationManager;
     private String provider;
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            locPostionView.setText("纬度：" + location.getLatitude() + "\n经度：" + location.getLongitude());
             showLocation(location);
         }
 
@@ -87,6 +90,7 @@ public class MapActivity extends AppCompatActivity {
         });
 
         postionView = (TextView) findViewById(R.id.textView);
+        locPostionView = (TextView) findViewById(R.id.locPostionView);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         List<String> providerList = locationManager.getProviders(true);
@@ -130,10 +134,13 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.getLatitude() + "," + location.getLatitude() + "&sensor=true");
+                    String urlString = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.getLatitude() + "," + location.getLongitude() + "&sensor=true";
+                    URL url = new URL(urlString);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    Log.i("MainActivity",urlString);
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(1000);
+                    connection.setRequestProperty("Accept-Language","zh-CN,zh");
                     connection.setReadTimeout(1000);
                     InputStream in = connection.getInputStream();
 
@@ -169,4 +176,28 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_map) {
+            startActivity(new Intent(this,MainActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
