@@ -21,7 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_google_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-            Log.i("MainActivity","经度："+ String.valueOf(mLastLocation.getLatitude()) + "  维度：" + String.valueOf(mLastLocation.getLongitude()));
+            Log.i("GoogleMapActivity","经度："+ String.valueOf(mLastLocation.getLatitude()) + "  维度：" + String.valueOf(mLastLocation.getLongitude()));
         }
     }
 

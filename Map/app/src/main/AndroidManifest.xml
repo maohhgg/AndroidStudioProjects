@@ -27,22 +27,30 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDwUnOOiW4lo25l8WHkUD4cCEJ4d7jo8AI" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="U16lFqNC2YTQV86WNMpudKDcAnxcIc2P" />
+
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".GoogleMapActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".BaiduMapActivity"
+            android:label="@string/title_activity_baidu_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

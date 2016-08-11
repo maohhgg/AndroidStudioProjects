@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -137,7 +136,7 @@ public class MapActivity extends AppCompatActivity {
                     String urlString = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.getLatitude() + "," + location.getLongitude() + "&sensor=true";
                     URL url = new URL(urlString);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    Log.i("MainActivity",urlString);
+                    Log.i("GoogleMapActivity",urlString);
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(1000);
                     connection.setRequestProperty("Accept-Language","zh-CN,zh");
@@ -187,15 +186,13 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_map) {
-            startActivity(new Intent(this,MainActivity.class));
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_baidu_map:
+                startActivity(new Intent(this,BaiduMapActivity.class));
+                break;
+            case R.id.action_google_map:
+                startActivity(new Intent(this,GoogleMapActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
