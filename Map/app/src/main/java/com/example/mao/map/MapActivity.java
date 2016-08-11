@@ -90,6 +90,7 @@ public class MapActivity extends AppCompatActivity {
 
         postionView = (TextView) findViewById(R.id.textView);
         locPostionView = (TextView) findViewById(R.id.locPostionView);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         List<String> providerList = locationManager.getProviders(true);
