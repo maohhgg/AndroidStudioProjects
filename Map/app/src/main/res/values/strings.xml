@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">Map</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="title_activity_map" translatable="false">MapActivity</string>
+    <string name="title_activity_baidu_map" translatable="false">BaiduMapActivity</string>
+    <string name="action_google_map">Google地图</string>
+    <string name="action_baidu_map">Baidu地图</string>
+</resources>
