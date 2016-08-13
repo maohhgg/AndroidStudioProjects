@@ -1,6 +1,7 @@
 package com.example.mao.sensor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -186,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_demo) {
+            startActivity(new Intent(this,CompassActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
