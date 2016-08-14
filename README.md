@@ -47,3 +47,11 @@
 * [app/java/com.example.network/index.php](https://github.com/maohhgg/AndroidStudioProjects/blob/master/NetWork/app/src/main/java/com/example/mao/network/index.php) 为生成 `XML` 和 `JSON` 的PHP文件，为不同的解析方式生成了不同的格式。
 
 #### [Map](https://github.com/maohhgg/AndroidStudioProjects/tree/master/Map)
+* 使用Google Api获取Google地图
+* 使用Baidu Api获取Baidu地图
+    > 现阶段完成地图展示api的调用 其他api方法未完成  待以后更新   TODO
+
+#### [Sensor](https://github.com/maohhgg/AndroidStudioProjects/tree/master/Sensor)
+* 常用传感器的使用
+* 简单指南针代码  
+    > 指针抖动优化失败  待以后更新    TODO  
