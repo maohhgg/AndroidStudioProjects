@@ -1,12 +1,13 @@
 package com.example.mao.animation;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,12 +25,18 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        TextView textViewDetail = (TextView) findViewById(R.id.textViewDetail);
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbar.setTitle(bundle.getString("title"));
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ViewCompat.setTransitionName(imageView, "img");
-        ViewCompat.setTransitionName(textViewDetail, "title");
+        ViewCompat.setTransitionName(toolbar, "title");
 
-        textViewDetail.setText(bundle.getString("title"));
+
         Picasso.with(imageView.getContext()).load(bundle.getString("img")).into(imageView);
     }
 }

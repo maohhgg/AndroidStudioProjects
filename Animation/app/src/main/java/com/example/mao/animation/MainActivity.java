@@ -2,6 +2,9 @@ package com.example.mao.animation;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -47,14 +50,12 @@ public class MainActivity extends AppCompatActivity implements MasonryAdapter.My
 
     @Override
     public void onItemClick(View view, Product product) {
-        Log.i("AAAA"," "+product.getImg());
+        Log.i("AAAA"," "+product.getBigImg());
         Intent intent = new Intent("com.example.mao.animation.DetailActivity");
         Bundle bundle = new Bundle();
         bundle.putString("title",product.getTitle());
         bundle.putString("img",product.getBigImg());
         intent.putExtras(bundle);
-        // shareView: 需要共享的视图
-        // "shareName": 设置的android:transitionName="shareName"
         ActivityOptions options = ActivityOptions
             .makeSceneTransitionAnimation(this,
                 Pair.create(view.findViewById(R.id.masonry_item_img), "img"),
@@ -70,7 +71,11 @@ public class MainActivity extends AppCompatActivity implements MasonryAdapter.My
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_scroll:
 
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
