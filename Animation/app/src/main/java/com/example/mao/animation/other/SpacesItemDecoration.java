@@ -1,4 +1,4 @@
-package com.example.mao.animation.other;
+package com.example.mao.animation.Other;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

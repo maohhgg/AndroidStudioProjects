@@ -5,8 +5,8 @@
     tools:context="com.example.mao.test.MainActivity">
 
     <item
-        android:id="@+id/action_scroll"
+        android:id="@+id/action_main2"
         android:orderInCategory="100"
-        android:title="Scroll"
+        android:title="TabWay"
         app:showAsAction="never" />
 </menu>

@@ -8,20 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mao.animation.R;
-import com.example.mao.animation.other.Product;
+import com.example.mao.animation.Other.Product;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * Created by maohh on 2016/8/16.
  */
 public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryView>{
-    private List<Product> products;
     private MyItemClickListener mItemClickListener;
 
-    public MasonryAdapter(List<Product> list) {
-        products = list;
+    public MasonryAdapter() {
+
     }
 
     @Override

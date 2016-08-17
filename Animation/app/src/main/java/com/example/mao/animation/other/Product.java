@@ -1,11 +1,11 @@
-package com.example.mao.animation.other;
+package com.example.mao.animation.Other;
 
 /**
  * Created by maohh on 2016/8/16.
  */
 
 public class Product {
-    private static final String BASE_URL = "http://222.222.222.200/drawable/";
+    private static final String BASE_URL = "http://192.168.1.2/drawable/";
     public static Product[] Product = new Product[]{
         new Product(0,"看着眼熟"),
         new Product(1,"油腻的无名"),

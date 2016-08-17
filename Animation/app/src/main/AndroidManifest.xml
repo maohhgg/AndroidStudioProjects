@@ -25,7 +25,19 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.example.mao.animation.DetailActivity" />
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DataActivity"
+            android:label="@string/title_activity_data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailTabActivity"
+            android:label="@string/title_activity_detail_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.example.mao.animation.DetailTabActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
