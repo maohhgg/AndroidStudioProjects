@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -15,9 +16,10 @@ import com.example.mao.animation.Other.Product;
 import com.example.mao.animation.Other.SpacesItemDecoration;
 
 public class DataActivity extends AppCompatActivity implements MasonryAdapter.MyItemClickListener {
-
+    private static final String TAG = "DataActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,TAG + "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
 
@@ -36,15 +38,11 @@ public class DataActivity extends AppCompatActivity implements MasonryAdapter.My
 
     @Override
     public void onItemClick(View view, Product product) {
-
         Intent intent = new Intent("com.example.mao.animation.DetailTabActivity");
         Bundle bundle = new Bundle();
         bundle.putString("img",product.getBigImg());
         intent.putExtras(bundle);
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this,
-                        Pair.create(view.findViewById(R.id.masonry_item_img), "img"));
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,view.findViewById(R.id.masonry_item_img),"img");
         startActivity(intent,options.toBundle());
-        startActivity(intent);
     }
 }

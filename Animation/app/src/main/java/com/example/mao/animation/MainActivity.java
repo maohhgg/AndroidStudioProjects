@@ -18,9 +18,8 @@ import com.example.mao.animation.Other.SpacesItemDecoration;
 
 
 
-
 public class MainActivity extends AppCompatActivity implements MasonryAdapter.MyItemClickListener {
-
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements MasonryAdapter.My
         SpacesItemDecoration decoration = new SpacesItemDecoration(-16);
         recyclerView.addItemDecoration(decoration);
     }
-
-
 
     @Override
     public void onItemClick(View view, Product product) {
