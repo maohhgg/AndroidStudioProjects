@@ -3,6 +3,7 @@ package com.example.mao.multiossyns.Class;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,6 +20,7 @@ import java.net.URL;
 public class HttpUtil {
     public static final int REQUEST_SUCCESS = 0;
     public static final int REQUEST_FAILED = 1;
+    public static final String TAG = "HttpUtil";
     public static void Get(final String URLstr, final Handler handler) {
         new Thread(new Runnable() {
             @Override
@@ -55,16 +57,17 @@ public class HttpUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 try {
+                    Log.i(TAG,"发送请求");
                     URL url = new URL(URLstr);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     DataOutputStream DOS = new DataOutputStream(connection.getOutputStream());
                     String temp = "";
                     for (String key: bundle.keySet()){
-                        temp += key + "=" + bundle.getString("key") + "&";
+                        temp += key + "=" + bundle.getString(key) + "&";
                     }
+                    Log.i(TAG,temp);
                     DOS.writeBytes(temp);
                     connection.setConnectTimeout(1000);
                     connection.setReadTimeout(1000);
@@ -77,9 +80,10 @@ public class HttpUtil {
                         RS.append(line);
                     }
                     Message msg = new Message();
-                    msg.what = 1;
+                    msg.what = REQUEST_SUCCESS;
                     msg.obj = RS.toString();
                     handler.sendMessage(msg);
+                    Log.i(TAG,"handler接收数据");
                     connection.disconnect();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

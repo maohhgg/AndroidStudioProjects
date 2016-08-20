@@ -13,7 +13,7 @@ public class Notification {
     private static final String  BASE_URL = "http://222.222.222.200/";
     private static final String  TAG = "Notification";
 
-    private Handler handler = new Handler(){
+    private static Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -27,7 +27,7 @@ public class Notification {
         }
     };
 
-    public void sendNotification(Bundle data){
+    public static void sendNotification(Bundle data){
         HttpUtil.Post(BASE_URL,data,handler);
     }
 }

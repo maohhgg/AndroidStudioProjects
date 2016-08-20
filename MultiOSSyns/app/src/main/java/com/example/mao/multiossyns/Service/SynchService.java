@@ -6,11 +6,13 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.mao.multiossyns.Receiver.BatteryReceiver;
 import com.example.mao.multiossyns.Receiver.SmsReceiver;
 
 public class SynchService extends Service {
     public final static String TAG = "SynchService";
-    private SmsReceiver receiver;
+    private SmsReceiver smsReceiver;
+    private BatteryReceiver batteryReceiver;
 
 
     public SynchService() {
@@ -26,8 +28,10 @@ public class SynchService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         IntentFilter filter = new IntentFilter(Intent.ACTION_TIME_TICK); //注册IntentFilter
         filter.setPriority(Integer.MAX_VALUE); //设置级别
-        receiver = new SmsReceiver();//本地服务
-        registerReceiver(receiver, filter);//注册广播
+        smsReceiver = new SmsReceiver();//本地服务
+        batteryReceiver = new BatteryReceiver();
+        registerReceiver(smsReceiver, filter);//注册广播
+        registerReceiver(batteryReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         Log.i(TAG,"注册广播");
         return START_STICKY;
     }
@@ -41,7 +45,8 @@ public class SynchService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
+        unregisterReceiver(smsReceiver);
+        unregisterReceiver(batteryReceiver);
         Log.i(TAG,"关闭服务 注销广播");
     }
 }

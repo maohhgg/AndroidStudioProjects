@@ -33,8 +33,8 @@ public class SmsReceiver extends BroadcastReceiver {
                     returnBundle.putString("from",message.getDisplayOriginatingAddress());
                     returnBundle.putString("content",message.getDisplayMessageBody());
                 }
-                Notification notification = new Notification();
-                notification.sendNotification(returnBundle);
+
+                Notification.sendNotification(returnBundle);
             }
         }
     }
