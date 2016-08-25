@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CityData</string>
+    <string name="title_activity_file_explore">FileExploreActivity</string>
 </resources>
