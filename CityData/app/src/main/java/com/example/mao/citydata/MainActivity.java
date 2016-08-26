@@ -2,6 +2,7 @@ package com.example.mao.citydata;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 
 import com.example.mao.citydata.Adapter.RecyclerAdapter;
 import com.example.mao.citydata.DB.CityDB;
+import com.example.mao.citydata.DB.DBManager;
 import com.example.mao.citydata.DB.Model.City;
 import com.example.mao.citydata.Utils.Util;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     private List<City> cityList = new ArrayList<>();
+    private SQLiteDatabase database = DBManager.getInstance().getDatabase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
