@@ -12,7 +12,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -49,14 +51,8 @@ public class PlayGround extends SurfaceView implements View.OnTouchListener{
     public PlayGround(Context context) {
         super(context);
         getHolder().addCallback(callback);
-        matrix = new Dot[ROW][COL];
-        for (int i = 0;i < ROW;i++){
-            for (int j = 0; j < COL;j++){
-                matrix[i][j] = new Dot(j,i);
-            }
-        }
-        setOnTouchListener(this);
         initGame();
+        setOnTouchListener(this);
     }
 
     public void redraw(){
@@ -90,6 +86,14 @@ public class PlayGround extends SurfaceView implements View.OnTouchListener{
     }
 
     private void initGame(){
+        matrix = new Dot[ROW][COL];
+        for (int i = 0;i < ROW;i++){
+            for (int j = 0; j < COL;j++){
+                Dot temp = new Dot(j,i);
+                temp.setStatus(Dot.STATUS_ON);
+                matrix[i][j] = temp;
+            }
+        }
         for (int i = 0;i < BLOCK;){
             int x = (int) (Math.random() * 1000) % COL;
             int y = (int) (Math.random() * 1000) % ROW;
@@ -147,6 +151,9 @@ public class PlayGround extends SurfaceView implements View.OnTouchListener{
 
     private int getDistance(Dot dot,int dir){
         int distance = 0;
+        if (isAtEdge(dot)){
+            return 1;
+        }
         Dot ori = dot,next;
         while (true){
             next = getNrighbour(ori,dir);
@@ -171,29 +178,50 @@ public class PlayGround extends SurfaceView implements View.OnTouchListener{
     }
 
     private void move(){
-        if (isAtEdge(cat)){
-            lose();
-            return;
-        }
-        Vector<Dot> avalible = new Vector<>();
+        HashMap<Integer,Dot> avalible = new HashMap<>();
         for (int i = 1;i < 7;i++){
             Dot dot = getNrighbour(cat,i);
             if (dot.getStatus() == Dot.STATUS_ON){
-                avalible.add(dot);
+                avalible.put(getDistance(cat,i),dot);
             }
+            Log.e("AA",getDistance(cat,i)+ "----" +i);
         }
+
         if (avalible.size() == 0){
             win();
         } else {
-            moveTo(avalible.get(0));
+            Iterator iterator = avalible.entrySet().iterator();
+            int temp,minPlus = ROW,min = 0;
+            while (iterator.hasNext()){
+                Map.Entry entry = (Map.Entry) iterator.next();
+                temp = (int) entry.getKey();
+                if (temp > 0 && temp < minPlus){
+                    minPlus = temp;
+                } else if (temp < 0 && temp < min){
+                    min = temp;
+                }
+            }
+            if (minPlus < ROW){
+                moveTo(avalible.get(minPlus));
+            } else {
+                moveTo(avalible.get(min));
+            }
+            if (isAtEdge(cat)){
+                lose();
+                return;
+            }
         }
     }
 
     private void lose(){
         Toast.makeText(getContext(),"YOU LOSE",Toast.LENGTH_LONG).show();
+        initGame();
+        redraw();
     }
     private void win(){
         Toast.makeText(getContext(),"YOU WIN",Toast.LENGTH_LONG).show();
+        initGame();
+        redraw();
     }
 
     @Override
