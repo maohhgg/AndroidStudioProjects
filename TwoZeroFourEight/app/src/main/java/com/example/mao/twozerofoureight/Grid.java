@@ -11,6 +11,7 @@ public class Grid {
         clearGrid();
     }
 
+    // 根据Cell对象（一般是Card对象，Card继承Cell）得到Card
     public Card getCellContent(Cell cell) {
         if (cell != null){
             return getCellContent(cell.getX(),cell.getY());
@@ -18,6 +19,7 @@ public class Grid {
         return null;
     }
 
+    // 得到具体位置的Card
     public Card getCellContent(int x, int y) {
         if (isCellWithinBounds(x, y)) {
             return field[x][y];
@@ -26,11 +28,13 @@ public class Grid {
         }
     }
 
+    // 判断是否在数组范围内
     private boolean isCellWithinBounds(int x, int y) {
         return 0 <= x && x < field.length
                 && 0 <= y && y < field[0].length;
     }
 
+    // 清除数组内容
     public void clearGrid() {
         for (int xx = 0; xx < field.length; xx++) {
             for (int yy = 0; yy < field[0].length; yy++) {
@@ -42,14 +46,16 @@ public class Grid {
         return field[0].length;
     }
 
-    public void insertTile(Card card) {
+    public void insertCard(Card card) {
         field[card.getX()][card.getY()] = card;
     }
 
-    public void removeTile(Card card) {
+    public void removeCard(Card card) {
         field[card.getX()][card.getY()] = null;
     }
 
+
+    // 从 getAvailableCells生成的Cell池中随机得到一个Cell对象
     public Cell randomAvailableCell() {
         ArrayList<Cell> availableCells = getAvailableCells();
         if (availableCells.size() >= 1) {
@@ -58,6 +64,9 @@ public class Grid {
         return null;
     }
 
+
+
+    // 初始化一个Cell池 Cell池大小 = 游戏Card数组总大小 - 当前Card数组大小
     private ArrayList<Cell> getAvailableCells() {
         ArrayList<Cell> availableCells = new ArrayList<>();
         for (int xx = 0; xx < field.length; xx++) {

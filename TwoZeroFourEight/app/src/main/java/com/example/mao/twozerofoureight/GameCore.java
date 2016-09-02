@@ -66,6 +66,7 @@ public class GameCore {
         gameStatus = GAME_NORMAL;
     }
 
+    // 随机生成一个（90%几率出现2 10%几率出现4）的card
     private void addRandomCard() {
         if (grid.isCellsAvailable()) {
             int value = Math.random() < 0.9 ? 2 : 4;
@@ -74,8 +75,9 @@ public class GameCore {
         }
     }
 
+    // 添加一个card到游戏card数组中
     private void spawnCard(Card card) {
-        grid.insertTile(card);
+        grid.insertCard(card);
     }
 
     public void move(int direction){

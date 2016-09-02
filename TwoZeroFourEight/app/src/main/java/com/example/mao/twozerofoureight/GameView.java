@@ -67,17 +67,20 @@ public class GameView extends View {
         drawCell(canvas);
     }
 
+    // 绘制所有的Card对象
     private void drawCell(Canvas canvas){
         paint.setTextSize(textSize);
         paint.setTextAlign(Paint.Align.CENTER);
 
         for (int xx = 0; xx < core.squaresX; xx++){
             for (int yy = 0; yy < core.squaresY; yy++){
+                // 计算当前Card的在屏幕位置
                 int sX = startingX + gridWidth + (cellSize + gridWidth) * xx;
                 int eX = sX + cellSize;
                 int sY = startingY + gridWidth + (cellSize + gridWidth) * yy;
                 int eY = sY + cellSize;
 
+                // 从全局Card数组中得到当前的Card对象
                 Card currentCard = core.grid.getCellContent(xx,yy);
                 if (currentCard != null){
                     int value = currentCard.getValue();
@@ -95,6 +98,7 @@ public class GameView extends View {
 
     }
 
+    // 根据屏幕初始化字体和card大小
     private void getLayout(int width, int height) {
         cellSize = Math.min(width / (core.squaresX + 1), height / (core.squaresY + 3));
         gridWidth = cellSize / 7;
@@ -105,6 +109,7 @@ public class GameView extends View {
         cellTextSize = textSize;
     }
 
+    // 创建背景网格
     private void drawBackgroundGrid(Canvas canvas) {
 
     }
