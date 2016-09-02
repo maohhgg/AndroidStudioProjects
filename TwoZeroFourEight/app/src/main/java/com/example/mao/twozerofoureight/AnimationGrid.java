@@ -2,9 +2,6 @@ package com.example.mao.twozerofoureight;
 
 import java.util.ArrayList;
 
-/**
- * Created by maohh on 2016/9/1.
- */
 public class AnimationGrid {
     private final ArrayList<AnimationCell>[][] field;
 

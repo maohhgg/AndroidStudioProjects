@@ -56,28 +56,28 @@ public class InputListener implements View.OnTouchListener {
                     float dy = y - startY;
 
                     //Vertical
-                    if (((dy >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || dy >= MOVE_THRESHOLD) && previousDirection % mView.core.MOVE_DOWN != 0) {
+                    if (((dy >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || dy >= MOVE_THRESHOLD) && previousDirection % GameCore.MOVE_DOWN != 0) {
                         moved = true;
-                        previousDirection = previousDirection * mView.core.MOVE_DOWN;
-                        veryLastDirection = mView.core.MOVE_DOWN;
-                        mView.core.move(mView.core.MOVE_DOWN);
-                    } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || dy <= -MOVE_THRESHOLD) && previousDirection % mView.core.MOVE_UP != 0) {
+                        previousDirection = previousDirection * GameCore.MOVE_DOWN;
+                        veryLastDirection = GameCore.MOVE_DOWN;
+                        mView.core.move(GameCore.MOVE_DOWN);
+                    } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || dy <= -MOVE_THRESHOLD) && previousDirection % GameCore.MOVE_UP != 0) {
                         moved = true;
-                        previousDirection = previousDirection * mView.core.MOVE_UP;
-                        veryLastDirection = mView.core.MOVE_UP;
-                        mView.core.move(mView.core.MOVE_UP);
+                        previousDirection = previousDirection * GameCore.MOVE_UP;
+                        veryLastDirection = GameCore.MOVE_UP;
+                        mView.core.move(GameCore.MOVE_UP);
                     }
                     //Horizontal
-                    if (((dx >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dx) >= Math.abs(dy)) || dx >= MOVE_THRESHOLD) && previousDirection % mView.core.MOVE_RIGHT != 0) {
+                    if (((dx >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dx) >= Math.abs(dy)) || dx >= MOVE_THRESHOLD) && previousDirection % GameCore.MOVE_RIGHT != 0) {
                         moved = true;
-                        previousDirection = previousDirection * mView.core.MOVE_RIGHT;
-                        veryLastDirection = mView.core.MOVE_RIGHT;
-                        mView.core.move(mView.core.MOVE_RIGHT);
-                    } else if (((dx <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dx) >= Math.abs(dy)) || dx <= -MOVE_THRESHOLD) && previousDirection % mView.core.MOVE_LEFT != 0) {
+                        previousDirection = previousDirection * GameCore.MOVE_RIGHT;
+                        veryLastDirection = GameCore.MOVE_RIGHT;
+                        mView.core.move(GameCore.MOVE_RIGHT);
+                    } else if (((dx <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dx) >= Math.abs(dy)) || dx <= -MOVE_THRESHOLD) && previousDirection % GameCore.MOVE_LEFT != 0) {
                         moved = true;
-                        previousDirection = previousDirection * mView.core.MOVE_LEFT;
-                        veryLastDirection = mView.core.MOVE_LEFT;
-                        mView.core.move(mView.core.MOVE_LEFT);
+                        previousDirection = previousDirection * GameCore.MOVE_LEFT;
+                        veryLastDirection = GameCore.MOVE_LEFT;
+                        mView.core.move(GameCore.MOVE_LEFT);
                     }
                     if (moved){
                         hasMoved = true;

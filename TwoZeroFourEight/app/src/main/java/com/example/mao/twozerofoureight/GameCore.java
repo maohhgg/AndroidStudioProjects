@@ -3,9 +3,6 @@ package com.example.mao.twozerofoureight;
 import android.content.Context;
 import android.util.Log;
 
-/**
- * Created by maohh on 2016/9/1.
- */
 public class GameCore {
     private final static String TAG = GameCore.class.getSimpleName();
 
@@ -21,10 +18,10 @@ public class GameCore {
     public final int squaresX = 4;
     public final int squaresY = 4;
 
-    private final Context mContext;
-    private final GameView mView;
+    public final Context mContext;
+    public final GameView mView;
 
-    private int gameStatus;
+    public int gameStatus;
     private long score = 0;
     private long highScore = 0;
 
@@ -43,12 +40,42 @@ public class GameCore {
         } else {
             grid.clearGrid();
         }
+
+        spawnCard(new Card(0,0,2));
+        spawnCard(new Card(1,0,4));
+        spawnCard(new Card(2,0,8));
+        spawnCard(new Card(3,0,16));
+        spawnCard(new Card(0,1,32));
+        spawnCard(new Card(1,1,64));
+        spawnCard(new Card(2,1,128));
+        spawnCard(new Card(3,1,256));
+        spawnCard(new Card(0,2,512));
+        spawnCard(new Card(1,2,1024));
+        spawnCard(new Card(2,2,2048));
+        spawnCard(new Card(3,2,4096));
+        spawnCard(new Card(0,3,8192));
+        spawnCard(new Card(1,3,8192));
+        spawnCard(new Card(2,3,8192));
+        spawnCard(new Card(3,3,8192));
+
         aGrid = new AnimationGrid(squaresX,squaresY);
         if (highScore < score){
             highScore = score;
         }
         score = 0;
         gameStatus = GAME_NORMAL;
+    }
+
+    private void addRandomCard() {
+        if (grid.isCellsAvailable()) {
+            int value = Math.random() < 0.9 ? 2 : 4;
+            Card card = new Card(grid.randomAvailableCell(), value);
+            spawnCard(card);
+        }
+    }
+
+    private void spawnCard(Card card) {
+        grid.insertTile(card);
     }
 
     public void move(int direction){

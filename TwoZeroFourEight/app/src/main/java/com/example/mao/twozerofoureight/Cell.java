@@ -1,8 +1,5 @@
 package com.example.mao.twozerofoureight;
 
-/**
- * Created by maohh on 2016/9/1.
- */
 public class Cell {
     private int x;
     private int y;

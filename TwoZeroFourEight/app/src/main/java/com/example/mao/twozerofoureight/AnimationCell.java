@@ -1,8 +1,5 @@
 package com.example.mao.twozerofoureight;
 
-/**
- * Created by maohh on 2016/9/1.
- */
 public class AnimationCell extends Cell {
     private final int[] extras;
     private final int animationType;
