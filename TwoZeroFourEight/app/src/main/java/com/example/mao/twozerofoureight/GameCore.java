@@ -54,9 +54,7 @@ public class GameCore {
         spawnCard(new Card(2,2,2048));
         spawnCard(new Card(3,2,4096));
         spawnCard(new Card(0,3,8192));
-        spawnCard(new Card(1,3,8192));
-        spawnCard(new Card(2,3,8192));
-        spawnCard(new Card(3,3,8192));
+
 
         aGrid = new AnimationGrid(squaresX,squaresY);
         if (highScore < score){

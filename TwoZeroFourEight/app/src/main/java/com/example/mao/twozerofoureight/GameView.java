@@ -28,10 +28,11 @@ public class GameView extends View {
     public int endingX;
     public int endingY;
 
-    private int gridWidth = 0;
-    private int cellSize = 0;
-    private float textSize = 0;
-    private float cellTextSize = 0;
+    private int gridWidth;
+    private int cellSize;
+    private float textSize;
+    private float cellTextSize;
+    private float headerTextSize;
 
     public GameView(Context context) {
         super(context);
@@ -50,10 +51,11 @@ public class GameView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        Log.e(TAG,"onSizeChanged");
         super.onSizeChanged(w, h, oldw, oldh);
         getLayout(w,h);
-        createBitmapCells();
         createBackgroundBitmap(w, h);
+        createBitmapCells();
     }
 
 
@@ -62,8 +64,10 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.e(TAG,"onDraw");
-
         canvas.drawBitmap(background, 0, 0, paint);
+        drawHeader(canvas);
+        drawBackground(canvas);
+        drawBackgroundGrid(canvas);
         drawCell(canvas);
     }
 
@@ -86,7 +90,6 @@ public class GameView extends View {
                     int value = currentCard.getValue();
                     int index = log2(value);
                     boolean animated = false;
-                    Log.e(TAG,"------"+index);
                     if (!animated) {
                         bitmapCell[index].setBounds(sX, sY, eX, eY);
                         bitmapCell[index].draw(canvas);
@@ -100,25 +103,74 @@ public class GameView extends View {
 
     // 根据屏幕初始化字体和card大小
     private void getLayout(int width, int height) {
-        cellSize = Math.min(width / (core.squaresX + 1), height / (core.squaresY + 3));
+        int screenMiddleX = width / 2;
+        int screenMiddleY = height / 2;
+
+        cellSize = Math.min(width / (core.squaresX + 1), height / (core.squaresY + 1));
         gridWidth = cellSize / 7;
+
+        int gridBackgroudWidth = cellSize * core.squaresX + gridWidth * (core.squaresX + 1);
+        int gridBackgroudHeight = cellSize * core.squaresY + gridWidth * (core.squaresY + 1);
+
+        int halfNumSquaresX = gridBackgroudWidth / 2;
+        int halfNumSquaresY = gridBackgroudHeight / 2;
+        int surplusY = height - gridBackgroudHeight;
+        int surplusX = width - gridBackgroudWidth;
+
+
+        if (width > height){
+            startingX = (int) (surplusX * 0.618);
+            endingX = startingX + gridBackgroudHeight;
+            startingY = screenMiddleY - halfNumSquaresY;
+            endingY = screenMiddleY + halfNumSquaresY;
+        } else {
+            startingX = screenMiddleX - halfNumSquaresX;
+            endingX = screenMiddleX + halfNumSquaresX;
+            startingY = (int) (surplusY * 0.618);
+            endingY = startingY + gridBackgroudHeight;
+        }
+
 
         paint.setTextSize(cellSize);
         textSize = cellSize * cellSize / Math.max(cellSize, paint.measureText("0000"));
-
+        headerTextSize = textSize * 2;
         cellTextSize = textSize;
+    }
+
+    private void drawHeader(Canvas canvas) {
+        paint.setTextSize(headerTextSize);
+        paint.setColor(getResources().getColor(R.color.text_black));
+        paint.setTextAlign(Paint.Align.LEFT);
+        int textShiftY = centerText() * 2;
+        int headerStartY = (int) ((startingY - cellSize * 1.5) - textShiftY);
+        canvas.drawText(getResources().getString(R.string.header), startingX, headerStartY, paint);
+    }
+
+    // 创建背景
+    private void drawBackground(Canvas canvas) {
+        Drawable backgroundRectangle = resources.getDrawable(R.drawable.background_rectangle);
+        drawDrawable(canvas, backgroundRectangle, startingX, startingY, endingX, endingY);
     }
 
     // 创建背景网格
     private void drawBackgroundGrid(Canvas canvas) {
+        Drawable backgroundCell = resources.getDrawable(R.drawable.cell_rectangle);
 
+        for (int xx = 0; xx < core.squaresX; xx++) {
+            for (int yy = 0; yy < core.squaresY; yy++) {
+                int sX = startingX + gridWidth + (cellSize + gridWidth) * xx;
+                int eX = sX + cellSize;
+                int sY = startingY + gridWidth + (cellSize + gridWidth) * yy;
+                int eY = sY + cellSize;
+
+                drawDrawable(canvas, backgroundCell, sX, sY, eX, eY);
+            }
+        }
     }
 
     // 创建背景
     private void createBackgroundBitmap(int width, int height) {
         background = Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8);
-        Canvas canvas = new Canvas();
-        drawBackgroundGrid(canvas);
     }
 
 
