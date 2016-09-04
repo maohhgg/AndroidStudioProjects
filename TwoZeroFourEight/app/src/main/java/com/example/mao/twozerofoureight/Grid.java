@@ -29,6 +29,10 @@ public class Grid {
     }
 
     // 判断是否在数组范围内
+    public boolean isCellWithinBounds(Cell cell) {
+        return isCellWithinBounds(cell.getX(),cell.getY());
+    }
+
     private boolean isCellWithinBounds(int x, int y) {
         return 0 <= x && x < field.length
                 && 0 <= y && y < field[0].length;
@@ -41,9 +45,6 @@ public class Grid {
                 field[xx][yy] = null;
             }
         }
-    }
-    public int length(){
-        return field[0].length;
     }
 
     public void insertCard(Card card) {
@@ -81,5 +82,13 @@ public class Grid {
 
     public boolean isCellsAvailable() {
         return (getAvailableCells().size() >= 1);
+    }
+
+    public boolean isCellAvailable(Cell cell) {
+        return !isCellOccupied(cell);
+    }
+
+    public boolean isCellOccupied(Cell cell) {
+        return (getCellContent(cell) != null);
     }
 }

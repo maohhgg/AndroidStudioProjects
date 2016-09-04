@@ -1,8 +1,7 @@
 package com.example.mao.twozerofoureight;
 
 public class Card extends Cell {
-    private final int value;
-    private Card[] mergedFrom = null;
+    private int value;
 
     public Card(int x, int y, int value) {
         super(x, y);
@@ -17,16 +16,12 @@ public class Card extends Cell {
         return value;
     }
 
-    public Card[] getMergedFrom() {
-        return mergedFrom;
+    public void setValue(int value) {
+        this.value = value;
     }
 
-    public void updatePosition(Cell cell) {
-        this.setX(cell.getX());
-        this.setY(cell.getY());
-    }
-
-    public void setMergedFrom(Card[] cards) {
-        mergedFrom = cards;
+    public void updatePosition(int x,int y){
+        this.setX(x);
+        this.setY(y);
     }
 }

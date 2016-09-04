@@ -45,7 +45,7 @@ public class GameCore {
         spawnCard(new Card(1,0,4));
         spawnCard(new Card(2,0,8));
         spawnCard(new Card(3,0,16));
-        spawnCard(new Card(0,1,32));
+        spawnCard(new Card(0,1,2));
         spawnCard(new Card(1,1,64));
         spawnCard(new Card(2,1,128));
         spawnCard(new Card(3,1,256));
@@ -54,7 +54,9 @@ public class GameCore {
         spawnCard(new Card(2,2,2048));
         spawnCard(new Card(3,2,4096));
         spawnCard(new Card(0,3,8192));
-
+        spawnCard(new Card(1,3,8192));
+        spawnCard(new Card(2,3,8192));
+        addRandomCard();
 
         aGrid = new AnimationGrid(squaresX,squaresY);
         if (highScore < score){
@@ -79,19 +81,40 @@ public class GameCore {
     }
 
     public void move(int direction){
-        switch (direction){
-            case MOVE_UP:
-                Log.e(TAG,"⬆");
-                break;
-            case MOVE_DOWN:
-                Log.e(TAG,"⬇");
-                break;
-            case MOVE_LEFT:
-                Log.e(TAG,"⬅");
-                break;
-            case MOVE_RIGHT:
-                Log.e(TAG,"➡");
-                break;
+
+        Cell vector = getVector(direction);
+        for (int yy = 0; yy < squaresY; yy++){
+            for (int xx = 0; xx < squaresX ; xx++){
+                Cell cell = new Cell(xx, yy);
+                Card card = grid.getCellContent(cell);
+                if (card != null){
+                    Cell[] postion = findFarthestPosition(cell, vector);
+                }
+
+            }
         }
+        mView.invalidate();
     }
+
+    private Cell getVector(int direction) {
+        Cell[] map = new Cell[7];
+        map[MOVE_UP] = new Cell(0, -1);
+        map[MOVE_RIGHT] = new Cell(1, 0);
+        map[MOVE_DOWN] = new Cell(0, 1);
+        map[MOVE_LEFT] = new Cell(-1, 0);
+        return map[direction];
+    }
+
+    private Cell[] findFarthestPosition(Cell cell, Cell vector) {
+        Cell previous;
+        Cell nextCell = new Cell(cell.getX(), cell.getY());
+        do {
+            previous = nextCell;
+            nextCell = new Cell(previous.getX() + vector.getX(),
+                    previous.getY() + vector.getY());
+        } while (grid.isCellWithinBounds(nextCell) && grid.isCellAvailable(nextCell));
+
+        return new Cell[]{previous, nextCell};
+    }
+
 }

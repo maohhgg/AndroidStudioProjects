@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -17,16 +18,21 @@ public class GameView extends View {
 
     private Bitmap background = null;
     private Resources resources;
+    private Context mContext;
     private int numCellTypes = 21;
 
     private final BitmapDrawable[] bitmapCell = new BitmapDrawable[numCellTypes];
     private final Paint paint = new Paint();
-    private Canvas canvas;
 
     public int startingX;
     public int startingY;
     public int endingX;
     public int endingY;
+    private int headerStartX;
+    private int headerStartY;
+    private int headerWidth;
+    private int headerHeigth;
+
 
     private int gridWidth;
     private int cellSize;
@@ -34,15 +40,18 @@ public class GameView extends View {
     private float cellTextSize;
     private float headerTextSize;
 
+
+
     public GameView(Context context) {
         super(context);
         core = new GameCore(context,this);
         resources = context.getResources();
+        mContext = context;
 
         Typeface font = Typeface.createFromAsset(resources.getAssets(), "ClearSans-Bold.ttf");
         paint.setTypeface(font);
 
-        this.setBackgroundColor(resources.getColor(R.color.background));
+        this.setBackgroundColor(ContextCompat.getColor(context, R.color.background));
 
         setOnTouchListener(new InputListener(this));
         core.newGame();
@@ -65,7 +74,7 @@ public class GameView extends View {
         super.onDraw(canvas);
         Log.e(TAG,"onDraw");
         canvas.drawBitmap(background, 0, 0, paint);
-        drawHeader(canvas);
+//        drawHeader(canvas);
         drawBackground(canvas);
         drawBackgroundGrid(canvas);
         drawCell(canvas);
@@ -89,11 +98,10 @@ public class GameView extends View {
                 if (currentCard != null){
                     int value = currentCard.getValue();
                     int index = log2(value);
-                    boolean animated = false;
-                    if (!animated) {
-                        bitmapCell[index].setBounds(sX, sY, eX, eY);
-                        bitmapCell[index].draw(canvas);
-                    }
+
+                    bitmapCell[index].setBounds(sX, sY, eX, eY);
+                    bitmapCell[index].draw(canvas);
+
                 }
 
             }
@@ -117,44 +125,55 @@ public class GameView extends View {
         int surplusY = height - gridBackgroudHeight;
         int surplusX = width - gridBackgroudWidth;
 
-
-        if (width > height){
-            startingX = (int) (surplusX * 0.618);
-            endingX = startingX + gridBackgroudHeight;
-            startingY = screenMiddleY - halfNumSquaresY;
-            endingY = screenMiddleY + halfNumSquaresY;
-        } else {
-            startingX = screenMiddleX - halfNumSquaresX;
-            endingX = screenMiddleX + halfNumSquaresX;
-            startingY = (int) (surplusY * 0.618);
-            endingY = startingY + gridBackgroudHeight;
-        }
-
-
         paint.setTextSize(cellSize);
         textSize = cellSize * cellSize / Math.max(cellSize, paint.measureText("0000"));
         headerTextSize = textSize * 2;
         cellTextSize = textSize;
+
+        if (width > height){
+            startingX = (int) (surplusX * 0.8);
+            endingX = startingX + gridBackgroudHeight;
+            startingY = screenMiddleY - halfNumSquaresY;
+            endingY = screenMiddleY + halfNumSquaresY;
+
+            headerStartX = (int) (startingX * 0.2);
+            headerWidth = (int) (startingX * 0.6);
+            headerHeigth =gridBackgroudHeight;
+            headerStartY = startingY;
+        } else {
+            startingX = screenMiddleX - halfNumSquaresX;
+            endingX = screenMiddleX + halfNumSquaresX;
+            startingY = (int) (surplusY * 0.5);
+            endingY = startingY + gridBackgroudHeight;
+
+            headerStartX = startingX;
+            headerWidth = gridBackgroudWidth;
+            headerHeigth = cellSize;
+            headerStartY = (int) (startingY - cellSize * 1.4);
+        }
+
     }
 
     private void drawHeader(Canvas canvas) {
         paint.setTextSize(headerTextSize);
-        paint.setColor(getResources().getColor(R.color.text_black));
+        paint.setColor(ContextCompat.getColor(mContext,R.color.text_black));
         paint.setTextAlign(Paint.Align.LEFT);
-        int textShiftY = centerText() * 2;
-        int headerStartY = (int) ((startingY - cellSize * 1.5) - textShiftY);
-        canvas.drawText(getResources().getString(R.string.header), startingX, headerStartY, paint);
+        canvas.drawText(resources.getString(R.string.header), headerStartX,headerStartY, paint);
+        drawDrawable(canvas, ContextCompat.getDrawable(mContext,R.drawable.new_game_rectangle),
+                headerStartX , headerStartY + headerHeigth / 2 , startingX + headerWidth / 2, headerStartY + headerHeigth);
     }
+
+
 
     // 创建背景
     private void drawBackground(Canvas canvas) {
-        Drawable backgroundRectangle = resources.getDrawable(R.drawable.background_rectangle);
+        Drawable backgroundRectangle = ContextCompat.getDrawable(mContext,R.drawable.background_rectangle);
         drawDrawable(canvas, backgroundRectangle, startingX, startingY, endingX, endingY);
     }
 
     // 创建背景网格
     private void drawBackgroundGrid(Canvas canvas) {
-        Drawable backgroundCell = resources.getDrawable(R.drawable.cell_rectangle);
+        Drawable backgroundCell = ContextCompat.getDrawable(mContext,R.drawable.cell_rectangle);
 
         for (int xx = 0; xx < core.squaresX; xx++) {
             for (int yy = 0; yy < core.squaresY; yy++) {
@@ -189,7 +208,7 @@ public class GameView extends View {
             Bitmap bitmap = Bitmap.createBitmap(cellSize, cellSize, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             //  创建不同颜色的方块并绑定文本
-            drawDrawable(canvas, resources.getDrawable(cellRectangleIds[xx]), 0, 0, cellSize, cellSize);
+            drawDrawable(canvas, ContextCompat.getDrawable(mContext,cellRectangleIds[xx]), 0, 0, cellSize, cellSize);
             drawCellText(canvas, value);
             // 21种方块存入数组中 不同的样式有13种 2的11到21重复
             bitmapCell[xx] = new BitmapDrawable(resources, bitmap);
@@ -201,9 +220,9 @@ public class GameView extends View {
     private void drawCellText(Canvas canvas, int value) {
         int textShiftY = centerText();
         if (value >= 8) {
-            paint.setColor(getResources().getColor(R.color.text_white));
+            paint.setColor(ContextCompat.getColor(mContext,R.color.text_white));
         } else {
-            paint.setColor(getResources().getColor(R.color.text_black));
+            paint.setColor(ContextCompat.getColor(mContext,R.color.text_black));
         }
         canvas.drawText("" + value, cellSize / 2, cellSize / 2 - textShiftY, paint);
     }
