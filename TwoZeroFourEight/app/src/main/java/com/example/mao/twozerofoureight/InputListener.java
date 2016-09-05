@@ -3,9 +3,6 @@ package com.example.mao.twozerofoureight;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by maohh on 2016/9/1.
- */
 public class InputListener implements View.OnTouchListener {
     private static final int SWIPE_THRESHOLD_VELOCITY = 25;
     private static final int MOVE_THRESHOLD = 250;
@@ -18,7 +15,6 @@ public class InputListener implements View.OnTouchListener {
     private float startY;
 
     private int previousDirection = 1;
-    private int veryLastDirection = 1;
 
     private boolean hasMoved = false;
 
@@ -62,7 +58,6 @@ public class InputListener implements View.OnTouchListener {
                     } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || dy <= -MOVE_THRESHOLD) && previousDirection % GameCore.MOVE_UP != 0) {
                         moved = true;
                         previousDirection = previousDirection * GameCore.MOVE_UP;
-                        veryLastDirection = GameCore.MOVE_UP;
                         mView.core.move(GameCore.MOVE_UP);
                     }
                     //  水平方向的移动

@@ -2,6 +2,7 @@ package com.example.mao.twozerofoureight;
 
 public class Card extends Cell {
     private int value;
+    private Card[] mergedFrom;
 
     public Card(int x, int y, int value) {
         super(x, y);
@@ -16,12 +17,20 @@ public class Card extends Cell {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void updatePosition(Cell cell){
+        updatePosition(cell.getX(),cell.getY());
     }
 
     public void updatePosition(int x,int y){
         this.setX(x);
         this.setY(y);
+    }
+
+    public Card[] getMergedFrom() {
+        return mergedFrom;
+    }
+
+    public void setMergedFrom(Card[] tile) {
+        mergedFrom = tile;
     }
 }

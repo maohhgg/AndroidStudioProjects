@@ -12,9 +12,15 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class GameView extends View {
     private final static String TAG = GameView.class.getSimpleName();
     public GameCore core;
+
+    public static final int BASE_ANIMATION_TIME = 100000000;
+    private static final float MERGING_ACCELERATION = (float) -0.5;
+    private static final float INITIAL_VELOCITY = (1 - MERGING_ACCELERATION) / 4;
 
     private Bitmap background = null;
     private Resources resources;
@@ -28,17 +34,12 @@ public class GameView extends View {
     public int startingY;
     public int endingX;
     public int endingY;
-    private int headerStartX;
-    private int headerStartY;
-    private int headerWidth;
-    private int headerHeigth;
 
 
     private int gridWidth;
     private int cellSize;
     private float textSize;
     private float cellTextSize;
-    private float headerTextSize;
 
 
 
@@ -73,12 +74,25 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.e(TAG,"onDraw");
+        if (!core.isActive()) {
+            drawEndGameState();
+        }
+
         canvas.drawBitmap(background, 0, 0, paint);
 //        drawHeader(canvas);
         drawBackground(canvas);
         drawBackgroundGrid(canvas);
         drawCell(canvas);
     }
+
+    private void drawEndGameState() {
+        if (core.gameWon()) {
+            Log.e(TAG,"YOU WIN");
+        } else if (core.gameLost()){
+            Log.e(TAG,"Game Over");
+        }
+    }
+
 
     // 绘制所有的Card对象
     private void drawCell(Canvas canvas){
@@ -93,14 +107,66 @@ public class GameView extends View {
                 int sY = startingY + gridWidth + (cellSize + gridWidth) * yy;
                 int eY = sY + cellSize;
 
+
                 // 从全局Card数组中得到当前的Card对象
                 Card currentCard = core.grid.getCellContent(xx,yy);
                 if (currentCard != null){
                     int value = currentCard.getValue();
                     int index = log2(value);
 
-                    bitmapCell[index].setBounds(sX, sY, eX, eY);
-                    bitmapCell[index].draw(canvas);
+                    //Check for any active animations
+                    ArrayList<AnimationCell> aArray = core.aGrid.getAnimationCell(xx, yy);
+                    boolean animated = false;
+                    for (int i = aArray.size() - 1; i >= 0; i--) {
+                        AnimationCell aCell = aArray.get(i);
+                        //If this animation is not active, skip it
+                        if (aCell.getAnimationType() == GameCore.SPAWN_ANIMATION) {
+                            animated = true;
+                        }
+                        if (!aCell.isActive()) {
+                            continue;
+                        }
+
+                        if (aCell.getAnimationType() == GameCore.SPAWN_ANIMATION) { // Spawning animation
+                            double percentDone = aCell.getPercentageDone();
+                            float textScaleSize = (float) (percentDone);
+                            paint.setTextSize(textSize * textScaleSize);
+
+                            float cellScaleSize = cellSize / 2 * (1 - textScaleSize);
+                            bitmapCell[index].setBounds((int) (sX + cellScaleSize), (int) (sY + cellScaleSize), (int) (eX - cellScaleSize), (int) (eY - cellScaleSize));
+                            bitmapCell[index].draw(canvas);
+                        } else if (aCell.getAnimationType() == GameCore.MERGE_ANIMATION) { // Merging Animation
+                            double percentDone = aCell.getPercentageDone();
+                            float textScaleSize = (float) (1 + INITIAL_VELOCITY * percentDone
+                                    + MERGING_ACCELERATION * percentDone * percentDone / 2);
+                            paint.setTextSize(textSize * textScaleSize);
+
+                            float cellScaleSize = cellSize / 2 * (1 - textScaleSize);
+                            bitmapCell[index].setBounds((int) (sX + cellScaleSize), (int) (sY + cellScaleSize), (int) (eX - cellScaleSize), (int) (eY - cellScaleSize));
+                            bitmapCell[index].draw(canvas);
+                        } else if (aCell.getAnimationType() == GameCore.MOVE_ANIMATION) {  // Moving animation
+                            double percentDone = aCell.getPercentageDone();
+                            int tempIndex = index;
+                            if (aArray.size() >= 2) {
+                                tempIndex = tempIndex - 1;
+                            }
+                            int previousX = aCell.extras[0];
+                            int previousY = aCell.extras[1];
+                            int currentX = currentCard.getX();
+                            int currentY = currentCard.getY();
+                            int dX = (int) ((currentX - previousX) * (cellSize + gridWidth) * (percentDone - 1) * 1.0);
+                            int dY = (int) ((currentY - previousY) * (cellSize + gridWidth) * (percentDone - 1) * 1.0);
+                            bitmapCell[tempIndex].setBounds(sX + dX, sY + dY, eX + dX, eY + dY);
+                            bitmapCell[tempIndex].draw(canvas);
+                        }
+                        animated = true;
+                    }
+
+                    //No active animations? Just draw the cell
+                    if (!animated) {
+                        bitmapCell[index].setBounds(sX, sY, eX, eY);
+                        bitmapCell[index].draw(canvas);
+                    }
 
                 }
 
@@ -127,7 +193,7 @@ public class GameView extends View {
 
         paint.setTextSize(cellSize);
         textSize = cellSize * cellSize / Math.max(cellSize, paint.measureText("0000"));
-        headerTextSize = textSize * 2;
+
         cellTextSize = textSize;
 
         if (width > height){
@@ -136,32 +202,15 @@ public class GameView extends View {
             startingY = screenMiddleY - halfNumSquaresY;
             endingY = screenMiddleY + halfNumSquaresY;
 
-            headerStartX = (int) (startingX * 0.2);
-            headerWidth = (int) (startingX * 0.6);
-            headerHeigth =gridBackgroudHeight;
-            headerStartY = startingY;
         } else {
             startingX = screenMiddleX - halfNumSquaresX;
             endingX = screenMiddleX + halfNumSquaresX;
             startingY = (int) (surplusY * 0.5);
             endingY = startingY + gridBackgroudHeight;
-
-            headerStartX = startingX;
-            headerWidth = gridBackgroudWidth;
-            headerHeigth = cellSize;
-            headerStartY = (int) (startingY - cellSize * 1.4);
         }
 
     }
 
-    private void drawHeader(Canvas canvas) {
-        paint.setTextSize(headerTextSize);
-        paint.setColor(ContextCompat.getColor(mContext,R.color.text_black));
-        paint.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText(resources.getString(R.string.header), headerStartX,headerStartY, paint);
-        drawDrawable(canvas, ContextCompat.getDrawable(mContext,R.drawable.new_game_rectangle),
-                headerStartX , headerStartY + headerHeigth / 2 , startingX + headerWidth / 2, headerStartY + headerHeigth);
-    }
 
 
 

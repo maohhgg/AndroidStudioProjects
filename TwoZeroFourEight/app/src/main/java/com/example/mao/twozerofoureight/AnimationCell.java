@@ -1,7 +1,7 @@
 package com.example.mao.twozerofoureight;
 
 public class AnimationCell extends Cell {
-    private final int[] extras;
+    public final int[] extras;
     private final int animationType;
     private final long animationTime;
     private final long delayTime;

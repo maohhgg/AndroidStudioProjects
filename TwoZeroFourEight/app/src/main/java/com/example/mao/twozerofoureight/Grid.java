@@ -33,6 +33,10 @@ public class Grid {
         return isCellWithinBounds(cell.getX(),cell.getY());
     }
 
+    public void setField(Cell cell,Card card) {
+        field[cell.getX()][cell.getY()] = card;
+    }
+
     private boolean isCellWithinBounds(int x, int y) {
         return 0 <= x && x < field.length
                 && 0 <= y && y < field[0].length;
@@ -90,5 +94,15 @@ public class Grid {
 
     public boolean isCellOccupied(Cell cell) {
         return (getCellContent(cell) != null);
+    }
+
+    public void prepareTiles() {
+        for (Card[] array : field) {
+            for (Card card : array) {
+                if (isCellOccupied(card)) {
+                    card.setMergedFrom(null);
+                }
+            }
+        }
     }
 }
