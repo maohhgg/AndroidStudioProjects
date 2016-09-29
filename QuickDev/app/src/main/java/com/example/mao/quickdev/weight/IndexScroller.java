@@ -28,6 +28,7 @@ public class IndexScroller {
     private int mState = STATE_HIDDEN;
     private int mListViewWidth;
     private int mListViewHeight;
+    private boolean mIsIndexing = false;
     private int mCurrentSection = -1;
     private ListView mListView = null;
     private SectionIndexer mIndexer = null;
@@ -39,6 +40,7 @@ public class IndexScroller {
     private static final int STATE_HIDING  = 1;
     private static final int STATE_SHOWN = 2;
     private static final int STATE_SHOWING = 3;
+
 
     public IndexScroller(Context context, ListView listView) {
         mDensity = context.getResources().getDisplayMetrics().density;
@@ -98,7 +100,7 @@ public class IndexScroller {
                         mSection[mCurrentSection],
                         previewRectF.left + (previewHeight - previewTextWidth) / 2,
                         previewRectF.top + mPreviewPadding - previewTextPaint.ascent(),
-                        previewPaint);
+                        previewTextPaint);
             }
 
             // 绘制索引栏内的索引目录
@@ -126,10 +128,29 @@ public class IndexScroller {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
+                if (mState != STATE_HIDDEN && contains(event.getX(), event.getY())) {
+                    setState(STATE_SHOWN);
+                    mIsIndexing = true;
+                    mCurrentSection = getSectionByPoint(event.getY());
+                    mListView.setSelection(mIndexer.getPositionForSection(mCurrentSection));
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (mIsIndexing) {
+                    if (contains(event.getX(), event.getY())) {
+                        mCurrentSection = getSectionByPoint(event.getY());
+                        mListView.setSelection(mIndexer.getPositionForSection(mCurrentSection));
+                    }
+                    return true;
+                }
                 break;
             case MotionEvent.ACTION_UP:
+                if (mIsIndexing) {
+                    mIsIndexing = false;
+                    mCurrentSection = -1;
+                }
+                if (mState == STATE_SHOWN)
+                    setState(STATE_HIDING);
                 break;
         }
         return false;
@@ -212,9 +233,23 @@ public class IndexScroller {
                     break;
             }
         }
-
     };
 
+
+    private boolean contains(float x, float y) {
+        return (x >= mIndexbarRectF.left && y >= mIndexbarRectF.top && y <= mIndexbarRectF.top + mIndexbarRectF.height());
+    }
+
+    private int getSectionByPoint(float y) {
+
+        if (mSection == null || mSection.length == 0) return 0;
+
+        if (y < mIndexbarRectF.top + mIndexbarMargin) return 0;
+
+        if (y >= mIndexbarRectF.top + mIndexbarRectF.height() - mIndexbarMargin)  return mSection.length - 1;
+
+        return (int) ((y - mIndexbarRectF.top - mIndexbarMargin) / ((mIndexbarRectF.height() - 2 * mIndexbarMargin) / mSection.length));
+    }
 
 
 }
