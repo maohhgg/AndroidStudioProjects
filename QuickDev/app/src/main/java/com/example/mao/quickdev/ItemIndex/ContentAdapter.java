@@ -1,14 +1,14 @@
-package com.example.mao.quickdev;
+package com.example.mao.quickdev.itemindex;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.SectionIndexer;
 
-import com.example.mao.quickdev.util.StringMatcher;
+import com.example.mao.quickdev.itemindex.util.StringMatcher;
 
 import java.util.List;
 
-class ContentAdapter extends ArrayAdapter<String> implements SectionIndexer {
+public class ContentAdapter extends ArrayAdapter<String> implements SectionIndexer {
 
     private String mSection = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

@@ -1,9 +1,10 @@
-package com.example.mao.quickdev;
+package com.example.mao.quickdev.itemindex;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.mao.quickdev.weight.IndexableListView;
+import com.example.mao.quickdev.R;
+import com.example.mao.quickdev.itemindex.view.IndexableListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
