@@ -16,8 +16,8 @@ public class HorizontalProgressBar extends ProgressBar {
     private static final int DEFAULT_TEXT_COLOR = 0xFF000000;
     private static final int DEFAULT_TEXT_SIZE = 12;
     private static final int DEFAULT_TEXT_OFFSET = 5;
-    private static final int DEFAULT_UNRECH_COLOR = 0xFFEE6E73;
-    private static final int DEFAULT_RECH_COLOR = 0xFFFC00D1;
+    private static final int DEFAULT_UNRECH_COLOR = 0xFF00C853;
+    private static final int DEFAULT_RECH_COLOR = 0xFFE65100;
     private static final int DEFAULT_RECH_HEIGHT = 2;
     private static final int DEFAULT_UNRECH_HEIGHT = 2;
 
@@ -133,11 +133,11 @@ public class HorizontalProgressBar extends ProgressBar {
         return result;
     }
 
-    private int sp2px(int sp){
+    protected int sp2px(int sp){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,sp,getResources().getDisplayMetrics());
     }
 
-    private int dp2px(int sp){
+    protected int dp2px(int sp){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,sp,getResources().getDisplayMetrics());
     }
 }
