@@ -14,25 +14,25 @@ public class ProgressActivity extends AppCompatActivity {
 
     private HorizontalProgressBar mProgressbar;
     private RoundProgressBar mRoundBar;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int progress = mProgressbar.getProgress();
             mProgressbar.setProgress(++progress);
-            if (progress >= 100){
+            if (progress >= 100) {
                 mHandler.removeMessages(MSG_UPDATE);
             }
             mHandler.sendEmptyMessageDelayed(MSG_UPDATE, 100);
         }
     };
-    private Handler mRoundHandler = new Handler(){
+    private Handler mRoundHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int progress = mRoundBar.getProgress();
             mRoundBar.setProgress(++progress);
-            if (progress >= 100){
+            if (progress >= 100) {
                 mRoundHandler.removeMessages(MSG_UPDATE);
             }
             mRoundHandler.sendEmptyMessageDelayed(MSG_UPDATE, 100);

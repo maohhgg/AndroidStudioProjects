@@ -10,16 +10,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".itemindex.ItemIndexActivity"
-            android:label="ItemIndex"/>
+            android:label="ItemIndex" />
         <activity
             android:name=".progressbar.ProgressActivity"
-            android:label="ProgressBar"/>
+            android:label="ProgressBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:theme="@style/FullScreen"
+            android:name=".viewpage.ViewPageActivity"/>
     </application>
 
 </manifest>

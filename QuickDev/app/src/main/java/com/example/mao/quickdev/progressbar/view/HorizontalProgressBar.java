@@ -33,7 +33,7 @@ public class HorizontalProgressBar extends ProgressBar {
     private int mRealWidth;
 
     public HorizontalProgressBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public HorizontalProgressBar(Context context, AttributeSet attrs) {
@@ -45,7 +45,7 @@ public class HorizontalProgressBar extends ProgressBar {
         obtainStyledAttrs(attrs);
     }
 
-    private void obtainStyledAttrs(AttributeSet attrs){
+    private void obtainStyledAttrs(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalProgressBar);
 
         mTextColor = ta.getColor(R.styleable.HorizontalProgressBar_progress_text_color, mTextColor);
@@ -82,29 +82,29 @@ public class HorizontalProgressBar extends ProgressBar {
         int textWidth = (int) mPaint.measureText(text);
         float progressX = radio * mRealWidth;
 
-        if (progressX + textWidth  > mRealWidth){
+        if (progressX + textWidth > mRealWidth) {
             isNeedUnRech = false;
             progressX = mRealWidth - textWidth;
         }
 
-        if (progressX > 0){
+        if (progressX > 0) {
             float endX = progressX - mTextOffset / 2;
             mPaint.setColor(mRechColor);
             mPaint.setStrokeWidth(mRechHeight);
-            canvas.drawLine(0,0,endX,0,mPaint);
+            canvas.drawLine(0, 0, endX, 0, mPaint);
         }
 
         mPaint.setColor(mTextColor);
-        float y = (int) (- (mPaint.ascent() + mPaint.descent()) / 2);
+        float y = (int) (-(mPaint.ascent() + mPaint.descent()) / 2);
         float textStartX = progressX;
-        canvas.drawText(text,textStartX,y,mPaint);
+        canvas.drawText(text, textStartX, y, mPaint);
 
 
-        if (isNeedUnRech){
-            float startX = progressX + mTextOffset  / 2 + textWidth;
+        if (isNeedUnRech) {
+            float startX = progressX + mTextOffset / 2 + textWidth;
             mPaint.setColor(mUnRechColor);
             mPaint.setStrokeWidth(mUnRechHeight);
-            canvas.drawLine(startX,0,mRealWidth,0,mPaint);
+            canvas.drawLine(startX, 0, mRealWidth, 0, mPaint);
         }
 
         canvas.restore();
@@ -115,17 +115,17 @@ public class HorizontalProgressBar extends ProgressBar {
         int mod = MeasureSpec.getMode(heightMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        if (mod == MeasureSpec.EXACTLY){
+        if (mod == MeasureSpec.EXACTLY) {
             result = height;
         } else {
             int textHeight = (int) (mPaint.descent() - mPaint.ascent());
             result = getPaddingTop()
                     + getPaddingBottom()
                     + Math.max(
-                            Math.max(mRechHeight,mUnRechHeight),
-                            Math.abs(textHeight));
+                    Math.max(mRechHeight, mUnRechHeight),
+                    Math.abs(textHeight));
 
-            if (mod == MeasureSpec.AT_MOST){
+            if (mod == MeasureSpec.AT_MOST) {
                 result = Math.min(height, result);
             }
         }
@@ -133,11 +133,11 @@ public class HorizontalProgressBar extends ProgressBar {
         return result;
     }
 
-    protected int sp2px(int sp){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,sp,getResources().getDisplayMetrics());
+    protected int sp2px(int sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, getResources().getDisplayMetrics());
     }
 
-    protected int dp2px(int sp){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,sp,getResources().getDisplayMetrics());
+    protected int dp2px(int sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sp, getResources().getDisplayMetrics());
     }
 }

@@ -10,6 +10,7 @@ import com.example.mao.quickdev.itemindex.ContentAdapter;
 import com.example.mao.quickdev.itemindex.ItemIndexActivity;
 import com.example.mao.quickdev.itemindex.view.IndexableListView;
 import com.example.mao.quickdev.progressbar.ProgressActivity;
+import com.example.mao.quickdev.viewpage.ViewPageActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,11 +26,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mItem = new ArrayList<>();
         classItem = new ArrayList<>();
-        classItem.add(ItemIndexActivity.class);
+
         mItem.add("ItemIndex");
-        classItem.add(ProgressActivity.class);
         mItem.add("ProgressBar");
-        Collections.sort(mItem);
+        mItem.add("Custom ViewPager");
+        classItem.add(ItemIndexActivity.class);
+        classItem.add(ProgressActivity.class);
+        classItem.add(ViewPageActivity.class);
+
 
         ContentAdapter adapter = new ContentAdapter(this, android.R.layout.simple_list_item_1, mItem);
         mListView = (IndexableListView) findViewById(R.id.mian_list);

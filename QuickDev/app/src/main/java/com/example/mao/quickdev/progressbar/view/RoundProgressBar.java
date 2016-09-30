@@ -15,11 +15,11 @@ public class RoundProgressBar extends HorizontalProgressBar {
     private int mMaxPaintWidth;
 
     public RoundProgressBar(Context context) {
-        super(context,null);
+        super(context, null);
     }
 
     public RoundProgressBar(Context context, AttributeSet attrs) {
-        super(context, attrs,0);
+        super(context, attrs, 0);
     }
 
     public RoundProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -35,14 +35,14 @@ public class RoundProgressBar extends HorizontalProgressBar {
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        mMaxPaintWidth = Math.max(mUnRechHeight,mRechHeight);
+        mMaxPaintWidth = Math.max(mUnRechHeight, mRechHeight);
         int expect = mRadius * 2 + mMaxPaintWidth + getPaddingLeft() + getPaddingRight();
-        int width = resolveSize(expect,widthMeasureSpec);
-        int height = resolveSize(expect,heightMeasureSpec);
+        int width = resolveSize(expect, widthMeasureSpec);
+        int height = resolveSize(expect, heightMeasureSpec);
 
-        int readWidth = Math.max(width,height);
+        int readWidth = Math.max(width, height);
         mRadius = (readWidth - getPaddingRight() - getPaddingLeft()) / 2;
-        setMeasuredDimension(readWidth,readWidth);
+        setMeasuredDimension(readWidth, readWidth);
     }
 
     @Override
@@ -53,12 +53,12 @@ public class RoundProgressBar extends HorizontalProgressBar {
 
         canvas.save();
 
-        canvas.translate(getPaddingLeft() + mMaxPaintWidth / 2,getPaddingTop() + mMaxPaintWidth / 2);
+        canvas.translate(getPaddingLeft() + mMaxPaintWidth / 2, getPaddingTop() + mMaxPaintWidth / 2);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(mUnRechColor);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(mUnRechHeight);
-        canvas.drawCircle(mRadius,mRadius,mRadius,mPaint);
+        canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
 
         float sweepAngle = getProgress() * 1.0f / getMax() * 360;
         mPaint.setColor(mRechColor);
@@ -69,7 +69,7 @@ public class RoundProgressBar extends HorizontalProgressBar {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mTextColor);
         mPaint.setAntiAlias(true);
-        canvas.drawText(text, mRadius - textWidth / 2, mRadius - textHeight,mPaint);
+        canvas.drawText(text, mRadius - textWidth / 2, mRadius - textHeight, mPaint);
 
         canvas.restore();
     }
