@@ -30,24 +30,9 @@ public class ViewPageActivity extends AppCompatActivity {
         initDatas();
 
         mViewPager.setAdapter(mAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                mIndicator.scroll(position, positionOffset);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mIndicator.setVisibleTabCount(4);
         mIndicator.setTabItemTitles(mTitle);
+        mIndicator.setViewPager(mViewPager,0);
     }
 
     private void initDatas() {

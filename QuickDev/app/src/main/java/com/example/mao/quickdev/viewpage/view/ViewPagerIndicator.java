@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -31,7 +32,9 @@ public class ViewPagerIndicator extends LinearLayout {
     private int mTranslationX;
     private int mInitTranslationX;
     private int mVisibleTabCount;
-    private int deviceWidth;
+
+    private ViewPager mViewPager;
+    private ViewPager.OnPageChangeListener mListener;
 
     private static final float RADIO_TRANGLE_WIDTH = 1 / 7f;
     private static final int TAB_COUNT_DEFAULT = 4;
@@ -69,7 +72,6 @@ public class ViewPagerIndicator extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        deviceWidth = w;
         mTrangleWidth = (int) (w / mVisibleTabCount * RADIO_TRANGLE_WIDTH);
         mInitTranslationX = w / mVisibleTabCount / 2 - mTrangleWidth / 2;
         initTrangle();
@@ -80,7 +82,7 @@ public class ViewPagerIndicator extends LinearLayout {
         mPath = new Path();
         mPath.moveTo(0, 0);
         mPath.lineTo(mTrangleWidth, 0);
-        mPath.lineTo(mTrangleWidth / 2, -mTrangleWidth / 2);
+        mPath.lineTo(mTrangleWidth / 2, -mTrangleHeight);
         mPath.close();
     }
 
@@ -99,6 +101,8 @@ public class ViewPagerIndicator extends LinearLayout {
         invalidate();
     }
 
+
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -111,6 +115,7 @@ public class ViewPagerIndicator extends LinearLayout {
             lp.width = getSrceenWidth() / mVisibleTabCount;
             view.setLayoutParams(lp);
         }
+        setItemClickEvent();
     }
 
     public int getSrceenWidth() {
@@ -131,6 +136,7 @@ public class ViewPagerIndicator extends LinearLayout {
                 addView(generateTitle(title));
             }
         }
+        setItemClickEvent();
     }
 
     private View generateTitle(String title) {
@@ -144,4 +150,66 @@ public class ViewPagerIndicator extends LinearLayout {
         tv.setLayoutParams(lp);
         return tv;
     }
+
+    public void setViewPager(ViewPager viewPager, int position){
+        mViewPager = viewPager;
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                scroll(position,positionOffset);
+                if (mListener != null){
+                    mListener.onPageScrolled(position,positionOffset,positionOffsetPixels);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (mListener != null){
+                    mListener.onPageSelected(position);
+                }
+                highLightTextView(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (mListener != null){
+                    mListener.onPageScrollStateChanged(state);
+                }
+            }
+        });
+        mViewPager.setCurrentItem(position);
+        highLightTextView(position);
+    }
+
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener){
+        mListener = listener;
+    }
+
+    public void highLightTextView(int position){
+        for (int i = 0; i < getChildCount(); i++){
+            View tv = getChildAt(i);
+            if (tv instanceof TextView){
+                ((TextView) tv).setTextColor(0x77ffffff);
+            }
+        }
+        View view = getChildAt(position);
+        if (view instanceof TextView){
+            ((TextView) view).setTextColor(0xffffffff);
+        }
+    }
+
+    public void setItemClickEvent(){
+        int count = getChildCount();
+        for (int i = 0; i < count;i++){
+            final int j = i;
+            View view = getChildAt(i);
+            view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.setCurrentItem(j);
+                }
+            });
+        }
+    }
+
 }
