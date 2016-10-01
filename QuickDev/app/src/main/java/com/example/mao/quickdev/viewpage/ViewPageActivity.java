@@ -17,7 +17,7 @@ import java.util.List;
 public class ViewPageActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ViewPagerIndicator mIndicator;
-    private List<String> mTitle = Arrays.asList("对话", "好友", "动态");
+    private List<String> mTitle = Arrays.asList("Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9", "Item10");
     private List<VpSimpleFragment> mContents = new ArrayList<>();
     private FragmentPagerAdapter mAdapter;
 
@@ -25,14 +25,33 @@ public class ViewPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_page);
-        
+
         initViews();
         initDatas();
+
         mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mIndicator.scroll(position, positionOffset);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mIndicator.setVisibleTabCount(4);
+        mIndicator.setTabItemTitles(mTitle);
     }
 
     private void initDatas() {
-        for (String title : mTitle){
+        for (String title : mTitle) {
             VpSimpleFragment fragment = VpSimpleFragment.newInstance(title);
             mContents.add(fragment);
         }
