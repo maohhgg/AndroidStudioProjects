@@ -22,8 +22,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/FullScreen"
-            android:name=".viewpage.ViewPageActivity"/>
+            android:name=".viewpage.ViewPageActivity"
+            android:theme="@style/FullScreen" />
+        <activity
+            android:name=".viewpageranmi.AnimaActivity"
+            android:theme="@style/FullScreen"/>
+        <activity
+            android:name=".viewpageranmi.ZoomOutActivity"
+            android:theme="@style/FullScreen" />
+        <activity
+            android:name=".viewpageranmi.DepthActivity"
+            android:theme="@style/FullScreen" />
     </application>
 
 </manifest>

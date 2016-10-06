@@ -1,23 +1,22 @@
-package com.example.mao.quickdev;
+package com.example.mao.quickdev.viewpageranmi;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.mao.quickdev.R;
 import com.example.mao.quickdev.itemindex.ContentAdapter;
-import com.example.mao.quickdev.itemindex.ItemIndexActivity;
 import com.example.mao.quickdev.itemindex.view.IndexableListView;
-import com.example.mao.quickdev.progressbar.ProgressActivity;
-import com.example.mao.quickdev.viewpage.ViewPageActivity;
-import com.example.mao.quickdev.viewpageranmi.AnimaActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+
+public class AnimaActivity  extends AppCompatActivity {
+
     private List<String> mItem;
     private IndexableListView mListView;
     private List<Class> classItem;
@@ -28,14 +27,10 @@ public class MainActivity extends AppCompatActivity {
         mItem = new ArrayList<>();
         classItem = new ArrayList<>();
 
-        mItem.add("ItemIndex");
-        mItem.add("ProgressBar");
-        mItem.add("Custom ViewPager");
-        mItem.add("ViewPager Animator");
-        classItem.add(ItemIndexActivity.class);
-        classItem.add(ProgressActivity.class);
-        classItem.add(ViewPageActivity.class);
-        classItem.add(AnimaActivity.class);
+        mItem.add("Depth");
+        mItem.add("ZoomOut");
+        classItem.add(DepthActivity.class);
+        classItem.add(ZoomOutActivity.class);
 
 
         ContentAdapter adapter = new ContentAdapter(this, android.R.layout.simple_list_item_1, mItem);
@@ -45,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this,classItem.get(position)));
+                startActivity(new Intent(AnimaActivity.this,classItem.get(position)));
             }
         });
         mListView.setFastScrollEnabled(true);
