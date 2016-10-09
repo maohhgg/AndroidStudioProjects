@@ -14,13 +14,13 @@ import com.example.mao.quickdev.viewpage.ViewPageActivity;
 import com.example.mao.quickdev.viewpageranmi.AnimaActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<String> mItem;
     private IndexableListView mListView;
     private List<Class> classItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
         ContentAdapter adapter = new ContentAdapter(this, android.R.layout.simple_list_item_1, mItem);
         mListView = (IndexableListView) findViewById(R.id.mian_list);
         mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this,classItem.get(position)));
+                startActivity(new Intent(MainActivity.this, classItem.get(position)));
             }
         });
         mListView.setFastScrollEnabled(true);
